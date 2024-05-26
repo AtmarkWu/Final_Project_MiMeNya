@@ -1,0 +1,20 @@
+{
+	"terminal.integrated.env.windows": {
+		"PATH": "${workspaceFolder}\\MinGW\\bin;${env:PATH}"
+	},
+	"files.associations": {
+		"type_traits": "c",
+		"scene.h": "c",
+		"global.h": "c",
+		"element.h": "c",
+		"stdbool.h": "c",
+		"algif.h": "c",
+		"allegro_audio.h": "c",
+		"allegro_primitives.h": "c",
+		"allegro_acodec.h": "c",
+		"menu.h": "c",
+		"allegro_ttf.h": "c",
+		"allegro.h": "c",
+		"gamewindow.h": "c"
+	}
+}
