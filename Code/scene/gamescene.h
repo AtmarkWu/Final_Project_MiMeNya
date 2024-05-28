@@ -7,6 +7,10 @@
 #include "../element/teleport.h"
 #include "../element/tree.h"
 #include "../element/projectile.h"
+#include <allegro5/allegro_audio.h>
+#include <allegro5/allegro_acodec.h>
+#include <allegro5/allegro_font.h>
+#include <allegro5/allegro_ttf.h>
 /*
    [game scene object]
 */
@@ -20,7 +24,13 @@ typedef enum EleType
 } EleType;
 typedef struct _GameScene
 {
+    //背景圖片
     ALLEGRO_BITMAP *background;
+    //背景音樂
+    ALLEGRO_SAMPLE *BGM;
+    ALLEGRO_SAMPLE_INSTANCE *sample_instance;
+
+    
 
 } GameScene;
 Scene *New_GameScene(int label);
