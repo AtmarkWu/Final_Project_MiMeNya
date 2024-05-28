@@ -130,19 +130,28 @@ bool game_update(Game *self)
         scene->Destroy(scene);
         switch (window)
         {
-        case 0: //進入主菜單(在sceneManager.h新增case標籤)
+        case 0: //進入主菜單(在sceneManager.h新增case標籤)->【預設】
             create_scene(Menu_L);
             break;
-        case 1: //進入遊戲主畫面
+        case 1: //進入遊戲主畫面->【主選單】
             create_scene(GameScene_L);
             break;
-        case 2: //進入設定
+        case 2: //進入設定->【主選單】
 
-        case 3: //進入說明
+        case 3: //進入說明->【主選單】
             create_scene(Information_L);
             break;
-        case 4: //關閉遊戲 
+        case 4: //關閉遊戲 ->【主選單】
             create_scene(Quit_L);
+            break;
+        case 5: //進入圖鑑->【遊戲內】
+            create_scene(Book_L);
+            break;
+        case 6: //進入商店->【遊戲內】
+            create_scene(Shop_L);
+            break;
+        case 7: //進入訂單頁面->【遊戲內】
+            create_scene(Order_L);
             break;
         case -1:
             return false;

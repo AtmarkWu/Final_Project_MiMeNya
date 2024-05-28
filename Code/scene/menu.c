@@ -39,6 +39,7 @@ Scene *New_Menu(int label)
     al_attach_sample_instance_to_mixer(pDerivedObj->sample_instance, al_get_default_mixer());
     // set the volume of instance
     al_set_sample_instance_gain(pDerivedObj->sample_instance, 0.3);
+    
     pObj->pDerivedObj = pDerivedObj;
     // setting derived object function
     pObj->Update = menu_update;
