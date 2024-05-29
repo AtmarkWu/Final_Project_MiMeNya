@@ -19,7 +19,7 @@ Scene *New_Info(int label)
     pDerivedObj->button_H = 120;
 
     // Load sound
-    pDerivedObj->song = al_load_sample("assets/sound/BGM.mp3");
+    pDerivedObj->song = al_load_sample("assets/sound/BGM.mp3"); //未改，待加入新音樂
 
     al_reserve_samples(20);
     pDerivedObj->sample_instance = al_create_sample_instance(pDerivedObj->song);

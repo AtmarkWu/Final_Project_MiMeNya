@@ -14,7 +14,7 @@ Scene *New_GameScene(int label)
     //設定背景圖片
     pDerivedObj->background = al_load_bitmap("assets/image/BG/gameMainBG.png");
     //設定音樂
-    pDerivedObj->BGM = al_load_sample("assets/sound/GameSceneBGM.mp3");
+    pDerivedObj->BGM = al_load_sample("assets/sound/game_sound/cat_field_BGM-1.mp3");
     al_reserve_samples(20);
     pDerivedObj->sample_instance = al_create_sample_instance(pDerivedObj->BGM);
     al_set_sample_instance_playmode(pDerivedObj->sample_instance, ALLEGRO_PLAYMODE_LOOP);
@@ -98,11 +98,11 @@ void game_scene_update(Scene *self)
 
     //感測各功能按鈕狀態，並跳轉畫面
     Game_DetectButtonOn(self);
-    if(mouse_state[1]){
-        if(Obj->over_button[0]){ //進入遊戲(1)
-            printf("Play\n");
+    if(mouse_state[1] && (window == 1)){ //當按鈕按下且在遊戲介面時
+        if(Obj->over_button[0]){ //進入圖鑑[0]
+            printf("In to Book\n");
             self->scene_end = true;
-            window = 1;
+            window = 5;
         }
         if(Obj->over_button[1]){ //調整設定(2)
             printf("Set\n");

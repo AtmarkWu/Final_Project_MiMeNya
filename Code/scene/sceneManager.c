@@ -1,8 +1,11 @@
 #include "sceneManager.h"
+//主選單相關的頁面的.h檔incoude
 #include "menu.h"
 #include "gamescene.h"
 #include "Information.h"
 #include "leave.h"
+//遊戲內頁面的.h檔include
+#include "book.h"
 Scene *scene = NULL;
 void create_scene(SceneType type)
 {
@@ -26,7 +29,7 @@ void create_scene(SceneType type)
         break;
 
     case Book_L:
-        scene = New_Scene(Book_L);
+        scene = New_Book(Book_L);
         break;
     
     //留給商店頁面(Shop_L = 6)

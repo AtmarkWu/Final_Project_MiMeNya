@@ -28,18 +28,18 @@ Scene *New_Menu(int label)
     pDerivedObj->button_H = 120;
 
     // Load sound
-    pDerivedObj->song = al_load_sample("assets/sound/BGM.mp3");
+    pDerivedObj->song = al_load_sample("assets/sound/game_sound/menu.mp3");
     al_reserve_samples(20);
     pDerivedObj->sample_instance = al_create_sample_instance(pDerivedObj->song);
     pDerivedObj->title_x = WIDTH / 2;
     pDerivedObj->title_y = HEIGHT / 2;
     // Loop the song until the display closes
-    al_set_sample_instance_playmode(pDerivedObj->sample_instance, ALLEGRO_PLAYMODE_LOOP);
+    al_set_sample_instance_playmode(pDerivedObj->sample_instance, ALLEGRO_PLAYMODE_ONCE);
     al_restore_default_mixer();
     al_attach_sample_instance_to_mixer(pDerivedObj->sample_instance, al_get_default_mixer());
     // set the volume of instance
     al_set_sample_instance_gain(pDerivedObj->sample_instance, 0.3);
-    
+    al_play_sample_instance(pDerivedObj->sample_instance); //放在這裡的話，在還沒有跳轉頁面之前，只會發出一次聲音
     pObj->pDerivedObj = pDerivedObj;
     // setting derived object function
     pObj->Update = menu_update;
@@ -52,7 +52,7 @@ void menu_update(Scene *self) //【菜單事件更新】
 {
     Menu *Obj = ((Menu *)(self->pDerivedObj));
     DetectButtonOn(self);
-    if (mouse_state[1]) //檢查滑鼠左鍵按下的當下是否在按鈕上
+    if (mouse_state[1] && (window == 0)) //檢查滑鼠左鍵按下的當下是否在按鈕上(且在主選單的介面)
     {
         if(Obj->over_button[0]){ //進入遊戲(1)
             printf("Play\n");
@@ -82,6 +82,7 @@ void menu_update(Scene *self) //【菜單事件更新】
 
 void menu_draw(Scene *self) //【菜單內要被畫出的東西】
 {
+    al_clear_to_color(al_map_rgb(0, 0, 0));
     Menu *Obj = ((Menu *)(self->pDerivedObj));
     printf("in menu: %d\n", al_get_bitmap_width(Obj->background_image));
 
@@ -101,7 +102,8 @@ void menu_draw(Scene *self) //【菜單內要被畫出的東西】
 
     DetectButtonOn(self); //畫完正常按鈕後，檢查滑鼠是否停在按鈕上，並更改狀態
 
-    al_play_sample_instance(Obj->sample_instance);
+
+    //al_play_sample_instance(Obj->sample_instance);
 }
 
 void DetectButtonOn(Scene *self){

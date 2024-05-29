@@ -17,6 +17,8 @@
 		"allegro.h": "c",
 		"gamewindow.h": "c",
 		"information.h": "c",
-		"rectangle.h": "c"
+		"rectangle.h": "c",
+		"meat.h": "c",
+		"projectile.h": "c"
 	}
 }

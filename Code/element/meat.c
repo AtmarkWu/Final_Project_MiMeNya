@@ -22,7 +22,7 @@ Elements *New_Meat(int label)
     for(int i=0;i<100;i++){
         pDerivedObj->meatsX[i] = 0;
         pDerivedObj->meatsY[i] = 0;
-        pDerivedObj->meatType[i]=0;
+        pDerivedObj->meatType[i] = 0;
     }
     //pDerivedObj->meatX = 0;
     //pDerivedObj->meatY = 0;
