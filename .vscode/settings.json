@@ -16,6 +16,7 @@
 		"allegro_ttf.h": "c",
 		"allegro.h": "c",
 		"gamewindow.h": "c",
-		"information.h": "c"
+		"information.h": "c",
+		"rectangle.h": "c"
 	}
 }
