@@ -27,4 +27,10 @@ extern bool debug_mode;
 
 extern int CloseGame;
 
+//圖鑑相關變數設定
+#define CatTotalKind 4
+extern int CatNumber[CatTotalKind]; //該種類貓咪目前持有幾隻
+extern bool NewCatOrNot[CatTotalKind]; //該種類貓咪是否為新的貓(true->new；false->old)
+extern bool Own[CatTotalKind]; //是否已經持有過該貓咪
+
 #endif

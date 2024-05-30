@@ -13,7 +13,6 @@ typedef struct _PageOne
     int width[2], height[2]; // the width and height of image
     ALLEGRO_BITMAP *frame[2]; //真正產生互動的範圍圖片
     ALLEGRO_BITMAP *decFrame[2]; //上面有裝飾的
-    Shape *hitbox; // the hitbox of object
     //預視圖內容圖片設定
     int Cx[2], Cy[2];
     int C_w[2], C_h[2];

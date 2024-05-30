@@ -16,10 +16,6 @@ Elements *New_PageOne(int label)
     pDerivedObj->height[0] = al_get_bitmap_height(pDerivedObj->frame[0]);
     pDerivedObj->x[0] = 80;
     pDerivedObj->y[0] = 50;
-    pDerivedObj->hitbox = New_Rectangle(pDerivedObj->x[0] + pDerivedObj->width[0] / 3,
-                                        pDerivedObj->y[0] + pDerivedObj->height[0] / 3,
-                                        pDerivedObj->x[0] + 2 * pDerivedObj->width[0] / 3,
-                                        pDerivedObj->y[0] + 2 * pDerivedObj->height[0] / 3);
     pDerivedObj->frame[1] = al_load_bitmap("assets/image/BookButton/frame.png");
     pDerivedObj->decFrame[1] = al_load_bitmap("assets/image/BookButton/frame_dec.png");
     pDerivedObj->width[1] = al_get_bitmap_width(pDerivedObj->frame[1]);
@@ -115,21 +111,23 @@ void PageOne_draw(Elements *self)
     for(int i = 0 ; i < FrameUD ; i++){
         al_draw_bitmap(Obj->decFrame[i], Obj->x[i]-55, Obj->y[i]-20, 0);
         //畫出要顯示在上面的貓咪縮圖、資訊等等
-        al_draw_bitmap(Obj->Content[i], Obj->Cx[i], Obj->Cy[i], 0);
-        
+        if(Own[i]){ //如果是已經擁有的貓 -> 顯示縮圖
+            al_draw_bitmap(Obj->Content[i], Obj->Cx[i], Obj->Cy[i], 0);
+        }
+        else{ //否則顯示未知
+            al_draw_bitmap(Obj->NoContent, Obj->Cx[i], Obj->Cy[i], 0);
+        }
     }
 
     //根據Open跟current_open決定是否畫出介紹圖
     for(int i = 0 ; i < FrameUD ; i++){
-        if(Obj->Open[i] && Obj->current_open == i){ //如果介紹有被打開且標籤對應正確
+        //如果介紹有被打開且標籤對應正確，而且該貓咪已獲得過
+        if(Obj->Open[i] && Obj->current_open == i && Own[i]){ 
             //畫出該細節圖應該要有的內容(主圖、貓咪、介紹、持有數等等)
             al_draw_bitmap(Obj->Detail, 0, 0, 0);
             al_draw_bitmap(Obj->D_content[i], Obj->Dx[i], Obj->Dy[i], 0);
         }
     }
-
-
-    
 }
 
 void PageOne_destory(Elements *self)
@@ -149,7 +147,6 @@ void PageOne_destory(Elements *self)
     al_destroy_bitmap(Obj->D_content[0]);
     al_destroy_bitmap(Obj->D_content[1]);
     al_destroy_bitmap(Obj->Detail);
-    free(Obj->hitbox);
     free(Obj);
     free(self);
 }
