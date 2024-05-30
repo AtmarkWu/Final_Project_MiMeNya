@@ -36,8 +36,10 @@ Elements *New_PageOne(int label)
     pDerivedObj->C_h[1] = al_get_bitmap_height(pDerivedObj->Content[1]);
     pDerivedObj->Cx[1] = pDerivedObj->x[1]+gap; //第二格的x偏移
     pDerivedObj->Cy[1] = pDerivedObj->y[1]+((pDerivedObj->height[1])/2)-((pDerivedObj->C_h[1])/2); //第二格的y置中
+    //標籤設置
     pDerivedObj->LackSign = al_load_bitmap("assets/image/BookButton/lack.png");
     pDerivedObj->GetSign = al_load_bitmap("assets/image/BookButton/get.png");
+    pDerivedObj->NewSign = al_load_bitmap("assets/image/BookButton/Type_new.png");
 
     //細節圖背景設定
     pDerivedObj->Detail = al_load_bitmap("assets/image/BookButton/detail.png");
@@ -82,7 +84,6 @@ void PageOne_update(Elements *self) {
 }
 
 void PageOne_interact(Elements *self, Elements *tar) {
-
 }
 
 void SeeDetail(Elements *self){
@@ -106,16 +107,23 @@ void SeeDetail(Elements *self){
 void PageOne_draw(Elements *self)
 {
     PageOne *Obj = ((PageOne *)(self->pDerivedObj));
-
+    int gap = 200;
     //畫出預視圖框框
     for(int i = 0 ; i < FrameUD ; i++){
         al_draw_bitmap(Obj->decFrame[i], Obj->x[i]-55, Obj->y[i]-20, 0);
         //畫出要顯示在上面的貓咪縮圖、資訊等等
         if(Own[i]){ //如果是已經擁有的貓 -> 顯示縮圖
             al_draw_bitmap(Obj->Content[i], Obj->Cx[i], Obj->Cy[i], 0);
+            if(NewCatOrNot[0]){ //如果是新獲得的貓 -> 顯示New
+                al_draw_bitmap(Obj->NewSign, Obj->Cx[i]+gap, Obj->Cy[i], 0);
+            }
+            else{ //如果不是新獲得的 -> 顯示get
+                al_draw_bitmap(Obj->GetSign, Obj->Cx[i]+gap, Obj->Cy[i], 0);
+            }
         }
-        else{ //否則顯示未知
+        else{ //否則顯示未知&缺少
             al_draw_bitmap(Obj->NoContent, Obj->Cx[i], Obj->Cy[i], 0);
+            al_draw_bitmap(Obj->LackSign, Obj->Cx[i]+gap, Obj->Cy[i], 0);
         }
     }
 
@@ -126,6 +134,10 @@ void PageOne_draw(Elements *self)
             //畫出該細節圖應該要有的內容(主圖、貓咪、介紹、持有數等等)
             al_draw_bitmap(Obj->Detail, 0, 0, 0);
             al_draw_bitmap(Obj->D_content[i], Obj->Dx[i], Obj->Dy[i], 0);
+            if(NewCatOrNot[0]){ //如果該貓咪是新的 -> 點進來後已經看過內容(不再是新的)
+                // -> 在預視圖要改成顯示get
+                NewCatOrNot[0] = false;
+            }
         }
     }
 }
@@ -143,6 +155,7 @@ void PageOne_destory(Elements *self)
     al_destroy_bitmap(Obj->Content[1]);
     al_destroy_bitmap(Obj->LackSign);
     al_destroy_bitmap(Obj->GetSign);
+    al_destroy_bitmap(Obj->NewSign);
     //清除【介紹】上資訊圖片
     al_destroy_bitmap(Obj->D_content[0]);
     al_destroy_bitmap(Obj->D_content[1]);

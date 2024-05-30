@@ -20,6 +20,7 @@ typedef struct _PageOne
     ALLEGRO_BITMAP *Content[2]; //有該貓咪時顯示的圖片
     ALLEGRO_BITMAP *LackSign; //沒有該貓咪的標籤
     ALLEGRO_BITMAP *GetSign; //擁有該貓咪的標籤
+    ALLEGRO_BITMAP *NewSign; //該貓咪為新獲得的標籤
 
     //細節放大圖設定
     bool Open[2]; //玩家是否有關閉or開啟預視圖
