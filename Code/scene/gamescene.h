@@ -5,9 +5,13 @@
 #include "../element/charater.h"
 #include "../element/floor.h"
 #include "../element/teleport.h"
-
 #include "../element/projectile.h"
+
 #include "../element/basket.h"
+#include "../element/meat.h"
+#include "../element/CatT.h"
+#include "../element/capture.h"
+
 #include <allegro5/allegro_audio.h>
 #include <allegro5/allegro_acodec.h>
 #include <allegro5/allegro_font.h>
@@ -22,7 +26,9 @@ typedef enum EleType
     Character_L,
     Projectile_L,
     Basket_L,
-    Meat_L
+    Meat_L,
+    CatT_L,
+    Capture_L
 } EleType;
 
 typedef struct _GameScene

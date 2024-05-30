@@ -107,7 +107,6 @@ void Meat_draw(Elements *self)
     Meat *Obj = ((Meat *)(self->pDerivedObj));
     if(Obj->click == 1 && mouse_state[1])
     {
-        Meat *Obj = ((Meat *)(self->pDerivedObj));
         al_draw_circle(Obj->x, Obj->y, Obj->r, Obj->color, 10);
     }
     for(int i=0;i<Obj->lenMeat;i++){

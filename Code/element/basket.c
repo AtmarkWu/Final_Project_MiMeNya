@@ -54,7 +54,13 @@ void Basket_destory(Elements *self)
 {
     Basket *Obj = ((Basket *)(self->pDerivedObj));
     al_destroy_bitmap(Obj->img);
+    al_destroy_bitmap(Obj->img1);
+    al_destroy_bitmap(Obj->img2);
+    al_destroy_bitmap(Obj->img3);
     free(Obj->hitbox);
+    free(Obj->hitbox1);
+    free(Obj->hitbox2);
+    free(Obj->hitbox3);
     free(Obj);
     free(self);
 }

@@ -1,5 +1,5 @@
 #include "gamescene.h"
-#include "../element/meat.h"
+
 #define BUTTON_NUM 4
 /*
    [GameScene function]
@@ -58,6 +58,8 @@ Scene *New_GameScene(int label)
     //_Register_elements(pObj, New_Character(Character_L));
     _Register_elements(pObj, New_Basket(Basket_L));
     _Register_elements(pObj, New_Meat(Meat_L));
+    _Register_elements(pObj, New_catT(CatT_L));
+    _Register_elements(pObj, New_Capture(Capture_L));
 
     // setting derived object function
     pObj->Update = game_scene_update;

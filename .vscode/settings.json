@@ -22,6 +22,8 @@
 		"projectile.h": "c",
 		"exit_button.h": "c",
 		"gamescene.h": "c",
-		"circle.h": "c"
+		"circle.h": "c",
+		"capture.h": "c",
+		"limits": "c"
 	}
 }
