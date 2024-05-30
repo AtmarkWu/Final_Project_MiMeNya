@@ -19,6 +19,9 @@
 		"information.h": "c",
 		"rectangle.h": "c",
 		"meat.h": "c",
-		"projectile.h": "c"
+		"projectile.h": "c",
+		"exit_button.h": "c",
+		"gamescene.h": "c",
+		"circle.h": "c"
 	}
 }

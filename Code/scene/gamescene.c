@@ -47,6 +47,10 @@ Scene *New_GameScene(int label)
     pDerivedObj->Money = al_load_bitmap("assets/image/GameButton/money.png");
 
     pObj->pDerivedObj = pDerivedObj;
+
+    //一進來初始化先把滑鼠點擊狀態清空
+    mouse_state[1] = false;
+
     // register 遊戲物件
     //_Register_elements(pObj, New_Floor(Floor_L));
     //_Register_elements(pObj, New_Teleport(Teleport_L));

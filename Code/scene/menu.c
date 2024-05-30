@@ -41,6 +41,10 @@ Scene *New_Menu(int label)
     al_set_sample_instance_gain(pDerivedObj->sample_instance, 0.3);
     al_play_sample_instance(pDerivedObj->sample_instance); //放在這裡的話，在還沒有跳轉頁面之前，只會發出一次聲音
     pObj->pDerivedObj = pDerivedObj;
+
+    //一進來初始化先把滑鼠點擊狀態清空
+    mouse_state[1] = false;
+
     // setting derived object function
     pObj->Update = menu_update;
     pObj->Draw = menu_draw;

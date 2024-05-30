@@ -32,6 +32,10 @@ Scene *New_Info(int label)
     // set the volume of instance
     al_set_sample_instance_gain(pDerivedObj->sample_instance, 0.3);
     pObj->pDerivedObj = pDerivedObj;
+
+    //一進來初始化先把滑鼠點擊狀態清空
+    mouse_state[1] = false;
+
     // setting derived object function
     pObj->Update = Info_update;
     pObj->Draw = Info_draw;

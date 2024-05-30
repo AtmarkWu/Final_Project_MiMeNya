@@ -2,6 +2,7 @@
 #include "../global.h"
 #include "../shapes/Circle.h"
 #include <allegro5/allegro_primitives.h>
+
 Elements *New_Meat(int label)
 {
     Meat *pDerivedObj = (Meat *)malloc(sizeof(Meat));
@@ -33,7 +34,7 @@ Elements *New_Meat(int label)
                                      pDerivedObj->r);
     // setting the interact object
     pObj->inter_obj[pObj->inter_len++] = Basket_L;
-    pObj->inter_obj[pObj->inter_len++] = Tree_L;
+    //pObj->inter_obj[pObj->inter_len++] = Tree_L;
 
     // setting derived object function
     pObj->pDerivedObj = pDerivedObj;

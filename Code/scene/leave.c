@@ -27,6 +27,10 @@ Scene *New_Leave(int label)
     pDerivedObj->title_y = HEIGHT / 2;
 
     pObj->pDerivedObj = pDerivedObj;
+
+    //一進來初始化先把滑鼠點擊狀態清空
+    mouse_state[1] = false;
+
     // setting derived object function
     pObj->Update = Leave_update;
     pObj->Draw = Leave_draw;

@@ -5,7 +5,7 @@
 #include "../element/charater.h"
 #include "../element/floor.h"
 #include "../element/teleport.h"
-#include "../element/tree.h"
+
 #include "../element/projectile.h"
 #include "../element/basket.h"
 #include <allegro5/allegro_audio.h>
@@ -19,7 +19,6 @@ typedef enum EleType
 {
     Floor_L,
     Teleport_L,
-    Tree_L,
     Character_L,
     Projectile_L,
     Basket_L,

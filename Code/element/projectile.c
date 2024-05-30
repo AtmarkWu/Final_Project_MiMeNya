@@ -18,7 +18,7 @@ Elements *New_Projectile(int label, int x, int y, int v)
                                      pDerivedObj->y + pDerivedObj->height / 2,
                                      min(pDerivedObj->width, pDerivedObj->height) / 2);
     // setting the interact object
-    pObj->inter_obj[pObj->inter_len++] = Tree_L;
+    //pObj->inter_obj[pObj->inter_len++] = Tree_L;
     pObj->inter_obj[pObj->inter_len++] = Floor_L;
     // setting derived object function
     pObj->pDerivedObj = pDerivedObj;
@@ -53,14 +53,14 @@ void Projectile_interact(Elements *self, Elements *tar)
         else if (Obj->x > WIDTH + Obj->width)
             self->dele = true;
     }
-    else if (tar->label == Tree_L)
-    {
-        Tree *tree = ((Tree *)(tar->pDerivedObj));
-        if (tree->hitbox->overlap(tree->hitbox, Obj->hitbox))
-        {
-            self->dele = true;
-        }
-    }
+    // else if (tar->label == Tree_L)
+    // {
+    //     Tree *tree = ((Tree *)(tar->pDerivedObj));
+    //     if (tree->hitbox->overlap(tree->hitbox, Obj->hitbox))
+    //     {
+    //         self->dele = true;
+    //     }
+    // }
 }
 void Projectile_draw(Elements *self)
 {
