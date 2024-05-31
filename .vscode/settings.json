@@ -24,6 +24,7 @@
 		"gamescene.h": "c",
 		"circle.h": "c",
 		"capture.h": "c",
-		"limits": "c"
+		"limits": "c",
+		"ratio": "c"
 	}
 }

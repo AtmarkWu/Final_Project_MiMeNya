@@ -30,8 +30,9 @@ typedef struct _PageOne
     int Dx[2], Dy[2];
     int D_w[2], D_h[2];
     ALLEGRO_BITMAP *D_content[2]; //該貓咪的全貌圖
-
-
+    //細節圖要顯示的貓咪持有數設定
+    int titleX, titleY;
+    ALLEGRO_FONT *font;
 
 } PageOne;
 
@@ -42,5 +43,8 @@ void PageOne_draw(Elements *self);
 void PageOne_destory(Elements *self);
 
 void SeeDetail(Elements *self);
+void HowManyCatIHave(Elements *self, int Cat_n);
+void PrintNumber(Elements *self, int num, int gap);
+
 
 #endif

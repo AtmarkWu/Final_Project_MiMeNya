@@ -1,6 +1,7 @@
 #include "pageOne.h"
 #include "../shapes/Rectangle.h"
 #define FrameUD 2
+#define MaxCat 100
 /*
    [PageOne function]
 */
@@ -59,7 +60,10 @@ Elements *New_PageOne(int label)
     pDerivedObj->D_h[1] = al_get_bitmap_height(pDerivedObj->D_content[1]);
     pDerivedObj->Dx[1] = posX;
     pDerivedObj->Dy[1] = posY;
-
+    //貓咪持有數字體設定
+    pDerivedObj->font = al_load_ttf_font("assets/font/GenSenRounded-M.ttc", 36, 0);
+    pDerivedObj->titleX = 630;
+    pDerivedObj->titleY = (HEIGHT/2)-45;
     
     //一進來初始化先把滑鼠點擊狀態清空
     mouse_state[1] = false;
@@ -134,11 +138,76 @@ void PageOne_draw(Elements *self)
             //畫出該細節圖應該要有的內容(主圖、貓咪、介紹、持有數等等)
             al_draw_bitmap(Obj->Detail, 0, 0, 0);
             al_draw_bitmap(Obj->D_content[i], Obj->Dx[i], Obj->Dy[i], 0);
+            //呼叫函式畫出持有數
+            HowManyCatIHave(self, CatNumber[0]);
+            //printf("---> %d\n", CatNumber[0]);
             if(NewCatOrNot[0]){ //如果該貓咪是新的 -> 點進來後已經看過內容(不再是新的)
                 // -> 在預視圖要改成顯示get
                 NewCatOrNot[0] = false;
             }
         }
+    }
+}
+
+void HowManyCatIHave(Elements *self, int Cat_n){ //逐字拆解目前數字，並畫出來
+    //printf("Draw Number\n");
+    int Number[MaxCat] = {0};
+    int NumberLen = 0;
+    int ten = 1;
+    int index = 0;
+    int gap = 0;
+    while(ten <= Cat_n){
+        ten *= 10;
+        NumberLen++;
+    }
+    while(Cat_n != 0){
+        Number[index] = Cat_n % 10;
+        Cat_n /= 10;
+        index++;
+    }
+    for(int i = NumberLen-1 ; i >= 0 ; i--){ //到著跑，即可畫出從最小位~最高位
+        PrintNumber(self, Number[i], gap);
+        //printf("--> print: %d\n", Number[i]);
+        gap += 30; //增加x座標往後畫
+    }
+}
+
+void PrintNumber(Elements *self, int num, int gap){ //依照現在的數字是啥就印出誰
+    PageOne *Obj = ((PageOne *)(self->pDerivedObj));
+    //printf("--> current num is %d\n", num);
+    switch(num){
+        case 0:
+            al_draw_text(Obj->font, al_map_rgb(0, 0, 0), Obj->titleX+gap, Obj->titleY, ALLEGRO_ALIGN_CENTER, "0");
+            break;
+        case 1:
+            al_draw_text(Obj->font, al_map_rgb(0, 0, 0), Obj->titleX+gap, Obj->titleY, ALLEGRO_ALIGN_CENTER, "1");
+            break;
+        case 2:
+            al_draw_text(Obj->font, al_map_rgb(0, 0, 0), Obj->titleX+gap, Obj->titleY, ALLEGRO_ALIGN_CENTER, "2");
+            break;
+        case 3:
+            al_draw_text(Obj->font, al_map_rgb(0, 0, 0), Obj->titleX+gap, Obj->titleY, ALLEGRO_ALIGN_CENTER, "3");
+            break;
+        case 4:
+            al_draw_text(Obj->font, al_map_rgb(0, 0, 0), Obj->titleX+gap, Obj->titleY, ALLEGRO_ALIGN_CENTER, "4");
+            break;
+        case 5:
+            al_draw_text(Obj->font, al_map_rgb(0, 0, 0), Obj->titleX+gap, Obj->titleY, ALLEGRO_ALIGN_CENTER, "5");
+            break;
+        case 6:
+            al_draw_text(Obj->font, al_map_rgb(0, 0, 0), Obj->titleX+gap, Obj->titleY, ALLEGRO_ALIGN_CENTER, "6");
+            break;
+        case 7:
+            al_draw_text(Obj->font, al_map_rgb(0, 0, 0), Obj->titleX+gap, Obj->titleY, ALLEGRO_ALIGN_CENTER, "7");
+            break;
+        case 8:
+            al_draw_text(Obj->font, al_map_rgb(0, 0, 0), Obj->titleX+gap, Obj->titleY, ALLEGRO_ALIGN_CENTER, "8");
+            break;
+        case 9:
+            al_draw_text(Obj->font, al_map_rgb(0, 0, 0), Obj->titleX+gap, Obj->titleY, ALLEGRO_ALIGN_CENTER, "9");
+            break;
+        default:
+            break;
     }
 }
 
@@ -156,10 +225,11 @@ void PageOne_destory(Elements *self)
     al_destroy_bitmap(Obj->LackSign);
     al_destroy_bitmap(Obj->GetSign);
     al_destroy_bitmap(Obj->NewSign);
-    //清除【介紹】上資訊圖片
+    //清除【介紹】上資訊圖片&字體
     al_destroy_bitmap(Obj->D_content[0]);
     al_destroy_bitmap(Obj->D_content[1]);
     al_destroy_bitmap(Obj->Detail);
+    al_destroy_font(Obj->font);
     free(Obj);
     free(self);
 }
