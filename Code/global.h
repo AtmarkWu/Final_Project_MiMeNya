@@ -33,4 +33,7 @@ extern int CatNumber[CatTotalKind]; //該種類貓咪目前持有幾隻
 extern bool NewCatOrNot[CatTotalKind]; //該種類貓咪是否為新的貓(true->new；false->old)
 extern bool Own[CatTotalKind]; //是否已經持有過該貓咪
 
+//商店相關變數設定
+extern int which_food;
+
 #endif

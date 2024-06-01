@@ -137,7 +137,7 @@ bool game_update(Game *self)
             create_scene(GameScene_L);
             break;
         case 2: //進入設定->【主選單】
-
+            break;
         case 3: //進入說明->【主選單】
             create_scene(Information_L);
             break;
@@ -150,9 +150,12 @@ bool game_update(Game *self)
         case 6: //進入商店->【遊戲內】
             create_scene(Shop_L);
             break;
-        case 7: //進入訂單頁面->【遊戲內】
-            create_scene(Order_L);
+        case 7: //確認購買頁面
+            create_scene(Buy_L);
             break;
+        // case 8: //進入訂單頁面->【遊戲內】
+        //     create_scene(Order_L);
+        //     break;
         case -1:
             return false;
         default:

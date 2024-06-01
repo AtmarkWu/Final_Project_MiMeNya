@@ -110,12 +110,12 @@ void game_scene_update(Scene *self)
             self->scene_end = true;
             window = 5;
         }
-        if(Obj->over_button[1]){ //調整設定(2)
+        if(Obj->over_button[1]){ //進入商店[1]
             printf("Set\n");
             self->scene_end = true;
-            window = -1;//XX
+            window = 6;
         }
-        if(Obj->over_button[2]){ //觀看說明(3)
+        if(Obj->over_button[2]){ //觀看說明(3)->尚未設定
             printf("read\n");
             self->scene_end = true;
             window = 3;

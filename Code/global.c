@@ -21,3 +21,6 @@ int CatNumber[CatTotalKind] = {0}; //初始的所有種類的貓咪數量=0 -> �
 bool NewCatOrNot[CatTotalKind] = {true};
 //因為初始啥都沒，所以全部都是新的(true->new；false->old)
 bool Own[CatTotalKind] = {false}; //一開始都沒有持有過
+
+//商店相關變數設定
+int which_food = 0;

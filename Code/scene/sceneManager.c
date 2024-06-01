@@ -4,8 +4,12 @@
 #include "gamescene.h"
 #include "Information.h"
 #include "leave.h"
-//遊戲內頁面的.h檔include
+//遊戲內頁面(圖鑑)的.h檔include
 #include "book.h"
+//商店頁面的.h檔include
+#include "shop.h"
+#include "Buy.h"
+
 Scene *scene = NULL;
 void create_scene(SceneType type)
 {
@@ -14,6 +18,7 @@ void create_scene(SceneType type)
     case Menu_L:
         scene = New_Menu(Menu_L);
         break;
+
     case GameScene_L:
         scene = New_GameScene(GameScene_L);
         break;
@@ -31,8 +36,14 @@ void create_scene(SceneType type)
     case Book_L:
         scene = New_Book(Book_L);
         break;
+
+    case Shop_L:
+        scene = New_Shop(Shop_L);
+        break;
     
-    //留給商店頁面(Shop_L = 6)
+    case Buy_L:
+        scene = New_Buy(Buy_L);
+        break;
 
     //留給訂單頁面(Order_L = 7)
 
