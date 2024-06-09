@@ -46,9 +46,9 @@ extern int Page; //圖鑑頁數控制
 extern int which_food;
 
 //金錢系統與肉泥持有相關
-#define MeatKind 4
+#define MeatKind 5 //配合which_food，從1開始才是肉泥
 #define MaxMoney 7 //最多7位數
 extern int TotalMoney; //當前持有總金額
-extern int OwnMeat[MeatKind]; //四種肉泥各自的持有數
+extern int OwnMeat[MeatKind]; //四種肉泥各自的持有數，從1開始才是肉泥
 
 #endif

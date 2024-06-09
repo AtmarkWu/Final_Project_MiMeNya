@@ -22,6 +22,9 @@ typedef struct _Meat
     ALLEGRO_BITMAP *img3;
     Shape *hitbox; // the hitbox of object
     ALLEGRO_COLOR color;
+
+    //記下目前拖出去的肉泥是哪個種類
+    int currentMeat;
 } Meat;
 
 Elements *New_Meat(int label);

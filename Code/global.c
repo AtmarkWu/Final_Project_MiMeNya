@@ -35,4 +35,4 @@ int which_food = 0;
 
 //金錢系統與肉泥持有相關
 int TotalMoney = 100; //目前持有總金額(初始先設定為100，之後debug)
-int OwnMeat[MeatKind] = {0}; //目前擁有的四種肉泥各自的數量
+int OwnMeat[MeatKind] = {0}; //目前擁有的四種肉泥各自的數量//配合which_food，從1開始才是肉泥

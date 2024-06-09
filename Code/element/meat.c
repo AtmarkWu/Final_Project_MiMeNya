@@ -2,6 +2,8 @@
 #include "../global.h"
 #include "../shapes/Circle.h"
 #include <allegro5/allegro_primitives.h>
+//肉泥拖曳功能，若沒有該種類的肉泥(數量為0)，就無法拖曳
+//每拖出去一次，就減少一個肉泥持有數
 
 Elements *New_Meat(int label)
 {
@@ -32,6 +34,9 @@ Elements *New_Meat(int label)
     pDerivedObj->hitbox = New_Circle(pDerivedObj->x,
                                      pDerivedObj->y,
                                      pDerivedObj->r);
+
+    pDerivedObj->currentMeat = 0;
+
     // setting the interact object
     pObj->inter_obj[pObj->inter_len++] = Basket_L;
 
@@ -61,11 +66,11 @@ void Meat_interact(Elements *self, Elements *tar)
         if(!mouse_state[1])
         {
             if (Obj->click){
-                
                 Obj->meatsX[Obj->lenMeat] = mouse.x;
                 Obj->meatsY[Obj->lenMeat] = mouse.y;
                 Obj->meatType[Obj->lenMeat] = Obj->currentColor;
                 Obj->lenMeat++;
+                OwnMeat[Obj->currentMeat]--; //拖曳出去放開後，持有數減一
             }
             Obj->click = 0;
         }
@@ -74,32 +79,45 @@ void Meat_interact(Elements *self, Elements *tar)
             Basket *Obj2 = ((Basket *)(tar->pDerivedObj));
             if (Obj->hitbox->overlap(Obj->hitbox, Obj2->hitbox) && mouse_state[1])
             {
-                Obj->click = 1;
-                Obj->color = al_map_rgb(250, 164, 147);
-                Obj->in = Basket_L;
-                Obj->currentColor = 1;
+                if(OwnMeat[1] != 0){ //如果擁有該種類的肉泥才能拖曳
+                    Obj->click = 1;
+                    Obj->color = al_map_rgb(250, 164, 147);
+                    Obj->in = Basket_L;
+                    Obj->currentColor = 1;
+                    Obj->currentMeat = 1;
+                }
             }
             if (Obj->hitbox->overlap(Obj->hitbox, Obj2->hitbox1) && mouse_state[1])
             {
-                Obj->click = 1;
-                Obj->color = al_map_rgb(222, 73, 53);
-                Obj->in = Basket_L;
-                Obj->currentColor = 2;
+                if(OwnMeat[2] != 0){ //如果擁有該種類的肉泥才能拖曳
+                    Obj->click = 1;
+                    Obj->color = al_map_rgb(222, 73, 53);
+                    Obj->in = Basket_L;
+                    Obj->currentColor = 2;
+                    Obj->currentMeat = 2;
+                }
             }
             if (Obj->hitbox->overlap(Obj->hitbox, Obj2->hitbox2) && mouse_state[1])
             {
-                Obj->click = 1;
-                Obj->color = al_map_rgb(96, 152, 151);
-                Obj->in = Basket_L;
-                Obj->currentColor = 3;
+                if(OwnMeat[3] != 0){ //如果擁有該種類的肉泥才能拖曳
+                    Obj->click = 1;
+                    Obj->color = al_map_rgb(96, 152, 151);
+                    Obj->in = Basket_L;
+                    Obj->currentColor = 3;
+                    Obj->currentMeat = 3;     
+                }
             }
             if (Obj->hitbox->overlap(Obj->hitbox, Obj2->hitbox3) && mouse_state[1])
             {
-                Obj->click = 1;
-                Obj->color = al_map_rgb(150, 191, 210);
-                Obj->in = Basket_L;
-                Obj->currentColor = 4;
+                if(OwnMeat[4] != 0){ //如果擁有該種類的肉泥才能拖曳
+                    Obj->click = 1;
+                    Obj->color = al_map_rgb(150, 191, 210);
+                    Obj->in = Basket_L;
+                    Obj->currentColor = 4;
+                    Obj->currentMeat = 4;
+                }
             }
+
         }
     }
 
@@ -139,10 +157,10 @@ void Meat_draw(Elements *self)
 void Meat_destory(Elements *self)
 {
     Meat *Obj = ((Meat *)(self->pDerivedObj));
-    //al_destroy_bitmap(Obj->img);
-    //al_destroy_bitmap(Obj->img1);
-    //al_destroy_bitmap(Obj->img2);
-    //al_destroy_bitmap(Obj->img3);
+    al_destroy_bitmap(Obj->img);
+    al_destroy_bitmap(Obj->img1);
+    al_destroy_bitmap(Obj->img2);
+    al_destroy_bitmap(Obj->img3);
 
     free(Obj->hitbox);
     free(Obj);

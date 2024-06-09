@@ -70,6 +70,7 @@ void buy_update(Elements *self) //事件更新
                 }
                 else{ //錢如果足夠才會扣錢，並回到商店頁面
                     TotalMoney -= Obj->MeatPrice[which_food];
+                    OwnMeat[which_food] += 1; //增加該肉泥的持有數
                     Obj->NoEnough = false;
                     //復原狀態，讓下一次可以先顯示肉泥，按過YES發現不夠錢再顯示
                     which_food = 0; //買完回到商店頁面
