@@ -1,5 +1,4 @@
 #include "gamescene.h"
-
 #define BUTTON_NUM 4
 /*
    [GameScene function]
@@ -16,7 +15,7 @@ Scene *New_GameScene(int label)
     //設定背景圖片
     pDerivedObj->background = al_load_bitmap("assets/image/BG/gameMainBG.png");
     //設定音樂
-    pDerivedObj->BGM = al_load_sample("assets/sound/game_sound/cat_field_BGM-1.mp3");
+    pDerivedObj->BGM = al_load_sample("assets/sound/game_sound/BGM-16bit_trial.wav");
     al_reserve_samples(20);
     pDerivedObj->sample_instance = al_create_sample_instance(pDerivedObj->BGM);
     al_set_sample_instance_playmode(pDerivedObj->sample_instance, ALLEGRO_PLAYMODE_LOOP);
@@ -47,6 +46,8 @@ Scene *New_GameScene(int label)
     pDerivedObj->button_h[3] = 69;
 
     pDerivedObj->Money = al_load_bitmap("assets/image/GameButton/money.png");
+
+    pDerivedObj->notify = al_load_bitmap("assets/image/GameButton/notify.png"); //新事件通知按鈕(尚未設定完全)
 
     pObj->pDerivedObj = pDerivedObj;
 
@@ -188,6 +189,9 @@ void game_scene_draw(Scene *self)
 
         Game_DetectButtonOn(self);
 
+        //畫完按鈕後，根據現在是否有新事件畫出通知符號 -> 尚未設定
+        al_draw_bitmap(gs->notify, 415, 10, 0);
+
         //畫出金錢條&上面的數字(固定)
         al_draw_bitmap(gs->Money, 40, 20, 0);
         HowManyMoneyIHaveGAMESCENE(self);
@@ -288,6 +292,7 @@ void game_scene_destroy(Scene *self)
     al_destroy_bitmap(Obj->highlight[2]);
     al_destroy_bitmap(Obj->highlight[3]);
     al_destroy_bitmap(Obj->Money);
+    al_destroy_bitmap(Obj->notify);
     //刪除遊戲內元素(各功能的頁面、貓、肉泥等等)
     ElementVec allEle = _Get_all_elements(self);
     for (int i = 0; i < allEle.len; i++)

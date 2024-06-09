@@ -28,9 +28,5 @@ void OrderControl_destory(Elements *self);
 
 void Order_DetectButtonOn(Elements *self);
 
-//void SeeDetail(Elements *self);
-//void HowManyCatIHave(Elements *self, int Cat_n);
-//void PrintNumber(Elements *self, int num, int gap);
-
 
 #endif

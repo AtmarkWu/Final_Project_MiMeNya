@@ -50,6 +50,7 @@ void catT_interact(Elements *self, Elements *tar)
                 printf("Cat: Oh No!\n");
                 CatNumber[3]++; //這邊以索引值0先代替
                 Own[3] = true;
+                TotalOwnCat++;
                 catchIT = true;
                 self->dele = true;
             }

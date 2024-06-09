@@ -74,6 +74,8 @@ typedef struct _GameScene
     //暫時使用的金錢條圖片
     ALLEGRO_BITMAP *Money;
     
+    //新內容通知小標籤
+    ALLEGRO_BITMAP *notify;
 
 } GameScene;
 

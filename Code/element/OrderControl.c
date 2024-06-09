@@ -18,6 +18,7 @@ Elements *New_OrderControl(int label)
     pDerivedObj->height = 69;
 
     
+
     //一進來初始化先把滑鼠點擊狀態清空
     mouse_state[1] = false;
 
@@ -49,24 +50,6 @@ void OrderControl_update(Elements *self) {
 void OrderControl_interact(Elements *self, Elements *tar) {
 }
 
-// void SeeDetail(Elements *self){
-//     OrderControl *Obj = ((OrderControl *)(self->pDerivedObj));
-//     for(int i = 0 ; i < FrameUD ; i++){
-//         if((mouse.x >= Obj->x[i])&&(mouse.x <= Obj->x[i]+Obj->width[i])&&(mouse.y >= Obj->y[i])&&(mouse.y <= Obj->y[i]+Obj->height[i])){ //如果滑鼠在預視圖範圍內
-//             Obj->Open[i] = true;
-//             Obj->current_open = i; //設定打開的標籤為第i個
-//             printf("Open!\n");
-//         }
-//         else{ //如果在滑鼠點擊的當下不是在預視圖內，且介紹是被打開的，就關起來
-//             if(Obj->Open[i] == true){
-//                 Obj->Open[i] = false;
-//                 Obj->current_open = -1; //如果沒有任何介紹被打開，就設為-1
-//                 printf("Close\n");
-//             }
-//         }
-//     }
-// }
-
 void OrderControl_draw(Elements *self)
 {
     if(gameFunction == 2){ //如果現在gameFunction是訂單功能開啟
@@ -96,67 +79,7 @@ void Order_DetectButtonOn(Elements *self){
     }
 }
 
-// void HowManyCatIHave(Elements *self, int Cat_n){ //逐字拆解目前數字，並畫出來
-//     //printf("Draw Number\n");
-//     int Number[MaxCat] = {0};
-//     int NumberLen = 0;
-//     int ten = 1;
-//     int index = 0;
-//     int gap = 0;
-//     while(ten <= Cat_n){
-//         ten *= 10;
-//         NumberLen++;
-//     }
-//     while(Cat_n != 0){
-//         Number[index] = Cat_n % 10;
-//         Cat_n /= 10;
-//         index++;
-//     }
-//     for(int i = NumberLen-1 ; i >= 0 ; i--){ //到著跑，即可畫出從最小位~最高位
-//         PrintNumber(self, Number[i], gap);
-//         //printf("--> print: %d\n", Number[i]);
-//         gap += 30; //增加x座標往後畫
-//     }
-// }
 
-// void PrintNumber(Elements *self, int num, int gap){ //依照現在的數字是啥就印出誰
-//     OrderControl *Obj = ((OrderControl *)(self->pDerivedObj));
-//     //printf("--> current num is %d\n", num);
-//     switch(num){
-//         case 0:
-//             al_draw_text(Obj->font, al_map_rgb(0, 0, 0), Obj->titleX+gap, Obj->titleY, ALLEGRO_ALIGN_CENTER, "0");
-//             break;
-//         case 1:
-//             al_draw_text(Obj->font, al_map_rgb(0, 0, 0), Obj->titleX+gap, Obj->titleY, ALLEGRO_ALIGN_CENTER, "1");
-//             break;
-//         case 2:
-//             al_draw_text(Obj->font, al_map_rgb(0, 0, 0), Obj->titleX+gap, Obj->titleY, ALLEGRO_ALIGN_CENTER, "2");
-//             break;
-//         case 3:
-//             al_draw_text(Obj->font, al_map_rgb(0, 0, 0), Obj->titleX+gap, Obj->titleY, ALLEGRO_ALIGN_CENTER, "3");
-//             break;
-//         case 4:
-//             al_draw_text(Obj->font, al_map_rgb(0, 0, 0), Obj->titleX+gap, Obj->titleY, ALLEGRO_ALIGN_CENTER, "4");
-//             break;
-//         case 5:
-//             al_draw_text(Obj->font, al_map_rgb(0, 0, 0), Obj->titleX+gap, Obj->titleY, ALLEGRO_ALIGN_CENTER, "5");
-//             break;
-//         case 6:
-//             al_draw_text(Obj->font, al_map_rgb(0, 0, 0), Obj->titleX+gap, Obj->titleY, ALLEGRO_ALIGN_CENTER, "6");
-//             break;
-//         case 7:
-//             al_draw_text(Obj->font, al_map_rgb(0, 0, 0), Obj->titleX+gap, Obj->titleY, ALLEGRO_ALIGN_CENTER, "7");
-//             break;
-//         case 8:
-//             al_draw_text(Obj->font, al_map_rgb(0, 0, 0), Obj->titleX+gap, Obj->titleY, ALLEGRO_ALIGN_CENTER, "8");
-//             break;
-//         case 9:
-//             al_draw_text(Obj->font, al_map_rgb(0, 0, 0), Obj->titleX+gap, Obj->titleY, ALLEGRO_ALIGN_CENTER, "9");
-//             break;
-//         default:
-//             break;
-//     }
-// }
 
 void OrderControl_destory(Elements *self)
 {
