@@ -48,8 +48,8 @@ void catT_interact(Elements *self, Elements *tar)
         if(mouse_state[1] && tar_obj->Ready){ //如果滑鼠按下的當下是開啟捕捉模式
             if(Obj->hitbox->overlap(Obj->hitbox, tar_obj->hitbox)){ //如果貓咪跟項圈的hitbox重疊 -> 抓到貓咪，數量++且貓咪、項圈消失
                 printf("Cat: Oh No!\n");
-                CatNumber[0]++; //這邊以索引值0先代替
-                Own[0] = true;
+                CatNumber[3]++; //這邊以索引值0先代替
+                Own[3] = true;
                 catchIT = true;
                 self->dele = true;
             }

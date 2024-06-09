@@ -19,6 +19,8 @@ typedef struct _Book
     float X[3], Y[3]; //【按鈕各自的XY座標】
     int button_W[3], button_H[3]; //【按鈕圖片的長寬(固定)】
 
+    ALLEGRO_BITMAP *cover; //圖鑑封面裝飾
+
     int title_x, title_y;
     ALLEGRO_FONT *font;
 

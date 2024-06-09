@@ -16,6 +16,7 @@
 //圖鑑相關
 #include "../element/book.h"
 #include "../element/pageOne.h"
+#include "../element/pageTwo.h"
 //商店相關
 #include "../element/shop.h"
 #include "../element/buy.h"
@@ -45,6 +46,7 @@ typedef enum EleType
     //圖鑑相關
     Book_L,
     PageOne_L,
+    PageTwo_L,
     //商店相關
     Shop_L,
     Buy_L,

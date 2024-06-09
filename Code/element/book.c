@@ -24,6 +24,8 @@ Elements *New_Book(int label)
     pDerivedObj->button_W[2] = al_get_bitmap_width(pDerivedObj->button[2]);
     pDerivedObj->button_H[2] = al_get_bitmap_height(pDerivedObj->button[2]);
 
+    pDerivedObj->cover = al_load_bitmap("assets/image/BookButton/cover.png"); //圖鑑封面圖
+
     //翻頁判斷設定
     pDerivedObj->pressD = 0;
     pDerivedObj->pressA = 0;
@@ -106,6 +108,11 @@ void Book_draw(Elements *self) //【菜單內要被畫出的東西】
             al_draw_bitmap(Obj->button[i], Obj->X[i], Obj->Y[i], 0);
             increments += 130;
         }
+
+        //繪製封面裝飾
+        if(Page == 0){ //如果在封面頁再畫出來
+            al_draw_bitmap(Obj->cover, 50, 30, 0);
+        }
         
         Book_DetectButtonOn(self); //畫完正常按鈕後，檢查滑鼠是否停在按鈕上，並更改狀態
 
@@ -166,6 +173,9 @@ void Book_destroy(Elements *self)
     al_destroy_bitmap(Obj->button[1]);
     al_destroy_bitmap(Obj->button[2]);
     al_destroy_font(Obj->font);
+
+    al_destroy_bitmap(Obj->cover);
+
     free(Obj);
     free(self);
 }

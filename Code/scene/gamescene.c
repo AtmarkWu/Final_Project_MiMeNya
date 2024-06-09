@@ -56,6 +56,13 @@ Scene *New_GameScene(int label)
     //設定遊戲功能頁面(初始化為預設)
     gameFunction = -1;
 
+    //初始化貓咪種類新舊、是否擁有、數量
+    for(int i = 0 ; i < CatTotalKind ; i++){
+        CatNumber[i] = 0;
+        NewCatOrNot[i] = true;
+        Own[i] = false;
+    }
+
     // register 遊戲物件
     //_Register_elements(pObj, New_Floor(Floor_L));
     //_Register_elements(pObj, New_Teleport(Teleport_L));
@@ -70,6 +77,7 @@ Scene *New_GameScene(int label)
     //圖鑑
     _Register_elements(pObj, New_Book(Book_L));
     _Register_elements(pObj, New_PageOne(PageOne_L));
+    _Register_elements(pObj, New_PageTwo(PageTwo_L));
     //商店
     _Register_elements(pObj, New_Shop(Shop_L));
     _Register_elements(pObj, New_Buy(Buy_L));
@@ -132,7 +140,7 @@ void game_scene_update(Scene *self)
             }
             if(Obj->over_button[1]){ //進入商店[1]
                 printf("In to Shop\n");
-                al_stop_sample_instance(Obj->sample_instance);
+                al_stop_sample_instance(Obj->sample_instance); //如果進入商店，就停止遊戲主畫面內的bgm
                 gameFunction = 1;
             }
             if(Obj->over_button[2]){ //進入訂單管理頁面[2]
