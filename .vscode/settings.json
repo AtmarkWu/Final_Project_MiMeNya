@@ -25,6 +25,9 @@
 		"circle.h": "c",
 		"capture.h": "c",
 		"limits": "c",
-		"ratio": "c"
+		"ratio": "c",
+		"floor.h": "c",
+		"teleport.h": "c",
+		"ordercontrol.h": "c"
 	}
 }

@@ -34,7 +34,6 @@ Elements *New_Meat(int label)
                                      pDerivedObj->r);
     // setting the interact object
     pObj->inter_obj[pObj->inter_len++] = Basket_L;
-    //pObj->inter_obj[pObj->inter_len++] = Tree_L;
 
     // setting derived object function
     pObj->pDerivedObj = pDerivedObj;
@@ -46,93 +45,105 @@ Elements *New_Meat(int label)
 }
 void Meat_update(Elements *self)
 {
-    Meat *Obj = ((Meat *)(self->pDerivedObj));
-    Shape *hitbox = Obj->hitbox;
-    hitbox->update_center_x(hitbox, mouse.x - Obj->x);
-    hitbox->update_center_y(hitbox, mouse.y - Obj->y);
-    Obj->x = mouse.x;
-    Obj->y = mouse.y;
+    if(gameFunction == -1){ //如果現在是遊戲功能開啟，再進行更新
+        Meat *Obj = ((Meat *)(self->pDerivedObj));
+        Shape *hitbox = Obj->hitbox;
+        hitbox->update_center_x(hitbox, mouse.x - Obj->x);
+        hitbox->update_center_y(hitbox, mouse.y - Obj->y);
+        Obj->x = mouse.x;
+        Obj->y = mouse.y;
+    }
 }
 void Meat_interact(Elements *self, Elements *tar)
 {
-    Meat *Obj = ((Meat *)(self->pDerivedObj));
-    if(!mouse_state[1])
-    {
-        if (Obj->click){
-            
-            Obj->meatsX[Obj->lenMeat] = mouse.x;
-            Obj->meatsY[Obj->lenMeat] = mouse.y;
-            Obj->meatType[Obj->lenMeat] = Obj->currentColor;
-            Obj->lenMeat++;
+    if(gameFunction == -1){ //如果現在是遊戲功能開啟，再進行互動感應
+        Meat *Obj = ((Meat *)(self->pDerivedObj));
+        if(!mouse_state[1])
+        {
+            if (Obj->click){
+                
+                Obj->meatsX[Obj->lenMeat] = mouse.x;
+                Obj->meatsY[Obj->lenMeat] = mouse.y;
+                Obj->meatType[Obj->lenMeat] = Obj->currentColor;
+                Obj->lenMeat++;
+            }
+            Obj->click = 0;
         }
-        Obj->click = 0;
+        else if (tar->label == Basket_L)
+        {
+            Basket *Obj2 = ((Basket *)(tar->pDerivedObj));
+            if (Obj->hitbox->overlap(Obj->hitbox, Obj2->hitbox) && mouse_state[1])
+            {
+                Obj->click = 1;
+                Obj->color = al_map_rgb(250, 164, 147);
+                Obj->in = Basket_L;
+                Obj->currentColor = 1;
+            }
+            if (Obj->hitbox->overlap(Obj->hitbox, Obj2->hitbox1) && mouse_state[1])
+            {
+                Obj->click = 1;
+                Obj->color = al_map_rgb(222, 73, 53);
+                Obj->in = Basket_L;
+                Obj->currentColor = 2;
+            }
+            if (Obj->hitbox->overlap(Obj->hitbox, Obj2->hitbox2) && mouse_state[1])
+            {
+                Obj->click = 1;
+                Obj->color = al_map_rgb(96, 152, 151);
+                Obj->in = Basket_L;
+                Obj->currentColor = 3;
+            }
+            if (Obj->hitbox->overlap(Obj->hitbox, Obj2->hitbox3) && mouse_state[1])
+            {
+                Obj->click = 1;
+                Obj->color = al_map_rgb(150, 191, 210);
+                Obj->in = Basket_L;
+                Obj->currentColor = 4;
+            }
+        }
     }
-    else if (tar->label == Basket_L)
-    {
-        Basket *Obj2 = ((Basket *)(tar->pDerivedObj));
-        if (Obj->hitbox->overlap(Obj->hitbox, Obj2->hitbox) && mouse_state[1])
-        {
-            Obj->click = 1;
-            Obj->color = al_map_rgb(250, 164, 147);
-            Obj->in = Basket_L;
-            Obj->currentColor = 1;
-        }
-        if (Obj->hitbox->overlap(Obj->hitbox, Obj2->hitbox1) && mouse_state[1])
-        {
-            Obj->click = 1;
-            Obj->color = al_map_rgb(222, 73, 53);
-            Obj->in = Basket_L;
-            Obj->currentColor = 2;
-        }
-        if (Obj->hitbox->overlap(Obj->hitbox, Obj2->hitbox2) && mouse_state[1])
-        {
-            Obj->click = 1;
-            Obj->color = al_map_rgb(96, 152, 151);
-            Obj->in = Basket_L;
-            Obj->currentColor = 3;
-        }
-        if (Obj->hitbox->overlap(Obj->hitbox, Obj2->hitbox3) && mouse_state[1])
-        {
-            Obj->click = 1;
-            Obj->color = al_map_rgb(150, 191, 210);
-            Obj->in = Basket_L;
-            Obj->currentColor = 4;
-        }
-    }
+
 }
 
 //if mouse_button_down -> draw
 void Meat_draw(Elements *self)
 {
-    Meat *Obj = ((Meat *)(self->pDerivedObj));
-    if(Obj->click == 1 && mouse_state[1])
-    {
-        al_draw_circle(Obj->x, Obj->y, Obj->r, Obj->color, 10);
-    }
-    for(int i=0;i<Obj->lenMeat;i++){
-        //al_draw_bitmap(Obj->img1, Obj->meatsX[i], Obj->meatsY[i], 0);
-        switch (Obj->meatType[i])   
+    if(gameFunction == -1){ //如果現在是遊戲功能，再畫出肉泥
+        Meat *Obj = ((Meat *)(self->pDerivedObj));
+        if(Obj->click == 1 && mouse_state[1])
         {
-        case 1:
-            al_draw_bitmap(Obj->img, Obj->meatsX[i], Obj->meatsY[i]-45, 0);
-            break;
-        case 2:
-            al_draw_bitmap(Obj->img1, Obj->meatsX[i], Obj->meatsY[i]-45, 0);
-            break;
-        case 3:
-            al_draw_bitmap(Obj->img2, Obj->meatsX[i], Obj->meatsY[i]-45, 0);
-            break;
-        case 4:
-            al_draw_bitmap(Obj->img3, Obj->meatsX[i], Obj->meatsY[i]-45, 0);
-            break;
-        default:
-            break;
+            al_draw_circle(Obj->x, Obj->y, Obj->r, Obj->color, 10);
+        }
+        for(int i=0;i<Obj->lenMeat;i++){
+            //al_draw_bitmap(Obj->img1, Obj->meatsX[i], Obj->meatsY[i], 0);
+            switch (Obj->meatType[i])   
+            {
+            case 1:
+                al_draw_bitmap(Obj->img, Obj->meatsX[i], Obj->meatsY[i]-45, 0);
+                break;
+            case 2:
+                al_draw_bitmap(Obj->img1, Obj->meatsX[i], Obj->meatsY[i]-45, 0);
+                break;
+            case 3:
+                al_draw_bitmap(Obj->img2, Obj->meatsX[i], Obj->meatsY[i]-45, 0);
+                break;
+            case 4:
+                al_draw_bitmap(Obj->img3, Obj->meatsX[i], Obj->meatsY[i]-45, 0);
+                break;
+            default:
+                break;
+            }
         }
     }
 }
 void Meat_destory(Elements *self)
 {
     Meat *Obj = ((Meat *)(self->pDerivedObj));
+    //al_destroy_bitmap(Obj->img);
+    //al_destroy_bitmap(Obj->img1);
+    //al_destroy_bitmap(Obj->img2);
+    //al_destroy_bitmap(Obj->img3);
+
     free(Obj->hitbox);
     free(Obj);
     free(self);

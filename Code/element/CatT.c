@@ -41,16 +41,20 @@ void catT_update(Elements *self)
 
 void catT_interact(Elements *self, Elements *tar)
 {
+    printf("in cat\n");
     catT *Obj = ((catT *)(self->pDerivedObj));
-    Capture *tar_obj = ((Capture *)(tar->pDerivedObj));
-    if(mouse_state[1] && tar_obj->Ready){ //如果滑鼠按下的當下是開啟捕捉模式
-        if(Obj->hitbox->overlap(Obj->hitbox, tar_obj->hitbox)){ //如果貓咪跟項圈的hitbox重疊 -> 抓到貓咪，數量++且貓咪消失
-            printf("Cat: Oh No!\n");
-            self->dele = true;
+    if(tar->label == Capture_L){
+        Capture *tar_obj = ((Capture *)(tar->pDerivedObj));
+        if(mouse_state[1] && tar_obj->Ready){ //如果滑鼠按下的當下是開啟捕捉模式
+            if(Obj->hitbox->overlap(Obj->hitbox, tar_obj->hitbox)){ //如果貓咪跟項圈的hitbox重疊 -> 抓到貓咪，數量++且貓咪、項圈消失
+                printf("Cat: Oh No!\n");
+                CatNumber[0]++; //這邊以索引值0先代替
+                Own[0] = true;
+                catchIT = true;
+                self->dele = true;
+            }
         }
-        //如果hitbox沒有重疊 -> 在capture.c會設定項圈消失
     }
-
 }
 
 void catT_draw(Elements *self)

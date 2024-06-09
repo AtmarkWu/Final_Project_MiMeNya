@@ -12,6 +12,16 @@
 #include "../element/CatT.h"
 #include "../element/capture.h"
 
+//遊戲功能頁面相關宣告
+//圖鑑相關
+#include "../element/book.h"
+#include "../element/pageOne.h"
+//商店相關
+#include "../element/shop.h"
+#include "../element/buy.h"
+//訂單相關
+#include "../element/OrderControl.h"
+
 #include <allegro5/allegro_audio.h>
 #include <allegro5/allegro_acodec.h>
 #include <allegro5/allegro_font.h>
@@ -27,14 +37,27 @@ typedef enum EleType
     Projectile_L,
     Basket_L,
     Meat_L,
-    CatT_L,
-    Capture_L
+    CatT_L,    
+    Capture_L,
+
+
+    //遊戲畫面內的功能頁面相關
+    //圖鑑相關
+    Book_L,
+    PageOne_L,
+    //商店相關
+    Shop_L,
+    Buy_L,
+    //訂單相關
+    OrderControl_L
+
 } EleType;
 
 typedef struct _GameScene
 {
     //設定字體
     ALLEGRO_FONT *font;
+    int title_x, title_y;
     //背景圖片
     ALLEGRO_BITMAP *background;
     //背景音樂
@@ -58,5 +81,7 @@ void game_scene_draw(Scene *self);
 void game_scene_destroy(Scene *self);
 
 void Game_DetectButtonOn(Scene *self);
+void HowManyMoneyIHaveGAMESCENE(Scene *self);
+void PrintMoneyGAMESCENE(Scene *self, int num, int gap);
 
 #endif

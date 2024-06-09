@@ -80,9 +80,11 @@ Elements *New_PageOne(int label)
 void PageOne_update(Elements *self) {
     //PageOne *Obj = ((PageOne *)(self->pDerivedObj));
 
-    //滑鼠點擊事件更新
-    if(mouse_state[1]){
-        SeeDetail(self);
+    if(gameFunction == 0 && (Page >= 1 && Page <= 5)){ //如果在圖鑑功能內且頁數為1(1~5)
+        //滑鼠點擊事件更新
+        if(mouse_state[1]){
+            SeeDetail(self);
+        }        
     }
 
 }
@@ -110,43 +112,48 @@ void SeeDetail(Elements *self){
 
 void PageOne_draw(Elements *self)
 {
-    PageOne *Obj = ((PageOne *)(self->pDerivedObj));
-    int gap = 200;
-    //畫出預視圖框框
-    for(int i = 0 ; i < FrameUD ; i++){
-        al_draw_bitmap(Obj->decFrame[i], Obj->x[i]-55, Obj->y[i]-20, 0);
-        //畫出要顯示在上面的貓咪縮圖、資訊等等
-        if(Own[i]){ //如果是已經擁有的貓 -> 顯示縮圖
-            al_draw_bitmap(Obj->Content[i], Obj->Cx[i], Obj->Cy[i], 0);
-            if(NewCatOrNot[0]){ //如果是新獲得的貓 -> 顯示New
-                al_draw_bitmap(Obj->NewSign, Obj->Cx[i]+gap, Obj->Cy[i], 0);
+    if(gameFunction == 0 && (Page >= 1 && Page <= 5)){ //如果在圖鑑功能內且頁數為1
+        PageOne *Obj = ((PageOne *)(self->pDerivedObj));
+        int gap = 200;
+        //畫出預視圖框框
+        for(int i = 0 ; i < FrameUD ; i++){
+            al_draw_bitmap(Obj->decFrame[i], Obj->x[i]-55, Obj->y[i]-20, 0);
+            //畫出要顯示在上面的貓咪縮圖、資訊等等
+            if(Own[i]){ //如果是已經擁有的貓 -> 顯示縮圖
+                al_draw_bitmap(Obj->Content[i], Obj->Cx[i], Obj->Cy[i], 0);
+                if(NewCatOrNot[0]){ //如果是新獲得的貓 -> 顯示New
+                    al_draw_bitmap(Obj->NewSign, Obj->Cx[i]+gap, Obj->Cy[i], 0);
+                }
+                else{ //如果不是新獲得的 -> 顯示get
+                    al_draw_bitmap(Obj->GetSign, Obj->Cx[i]+gap, Obj->Cy[i], 0);
+                }
             }
-            else{ //如果不是新獲得的 -> 顯示get
-                al_draw_bitmap(Obj->GetSign, Obj->Cx[i]+gap, Obj->Cy[i], 0);
+            else{ //否則顯示未知&缺少
+                al_draw_bitmap(Obj->NoContent, Obj->Cx[i], Obj->Cy[i], 0);
+                al_draw_bitmap(Obj->LackSign, Obj->Cx[i]+gap, Obj->Cy[i], 0);
             }
         }
-        else{ //否則顯示未知&缺少
-            al_draw_bitmap(Obj->NoContent, Obj->Cx[i], Obj->Cy[i], 0);
-            al_draw_bitmap(Obj->LackSign, Obj->Cx[i]+gap, Obj->Cy[i], 0);
+
+        //根據Open跟current_open決定是否畫出介紹圖
+        for(int i = 0 ; i < FrameUD ; i++){
+            //如果介紹有被打開且標籤對應正確，而且該貓咪已獲得過
+            if(Obj->Open[i] && Obj->current_open == i && Own[i]){ 
+                //畫出該細節圖應該要有的內容(主圖、貓咪、介紹、持有數等等)
+                al_draw_bitmap(Obj->Detail, 0, 0, 0);
+                al_draw_bitmap(Obj->D_content[i], Obj->Dx[i], Obj->Dy[i], 0);
+                //呼叫函式畫出持有數
+                HowManyCatIHave(self, CatNumber[0]);
+                //printf("---> %d\n", CatNumber[0]);
+                if(NewCatOrNot[0]){ //如果該貓咪是新的 -> 點進來後已經看過內容(不再是新的)
+                    // -> 在預視圖要改成顯示get
+                    NewCatOrNot[0] = false;
+                }
+            }
         }
+
+
     }
 
-    //根據Open跟current_open決定是否畫出介紹圖
-    for(int i = 0 ; i < FrameUD ; i++){
-        //如果介紹有被打開且標籤對應正確，而且該貓咪已獲得過
-        if(Obj->Open[i] && Obj->current_open == i && Own[i]){ 
-            //畫出該細節圖應該要有的內容(主圖、貓咪、介紹、持有數等等)
-            al_draw_bitmap(Obj->Detail, 0, 0, 0);
-            al_draw_bitmap(Obj->D_content[i], Obj->Dx[i], Obj->Dy[i], 0);
-            //呼叫函式畫出持有數
-            HowManyCatIHave(self, CatNumber[0]);
-            //printf("---> %d\n", CatNumber[0]);
-            if(NewCatOrNot[0]){ //如果該貓咪是新的 -> 點進來後已經看過內容(不再是新的)
-                // -> 在預視圖要改成顯示get
-                NewCatOrNot[0] = false;
-            }
-        }
-    }
 }
 
 void HowManyCatIHave(Elements *self, int Cat_n){ //逐字拆解目前數字，並畫出來

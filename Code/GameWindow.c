@@ -144,18 +144,6 @@ bool game_update(Game *self)
         case 4: //關閉遊戲 ->【主選單】
             create_scene(Quit_L);
             break;
-        case 5: //進入圖鑑->【遊戲內】
-            create_scene(Book_L);
-            break;
-        case 6: //進入商店->【遊戲內】
-            create_scene(Shop_L);
-            break;
-        case 7: //確認購買頁面
-            create_scene(Buy_L);
-            break;
-        // case 8: //進入訂單頁面->【遊戲內】
-        //     create_scene(Order_L);
-        //     break;
         case -1:
             return false;
         default:

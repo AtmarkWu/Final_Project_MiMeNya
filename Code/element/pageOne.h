@@ -3,6 +3,10 @@
 #include "element.h"
 #include "../scene/gamescene.h" // for element label
 #include "../shapes/Shape.h"
+#include <allegro5/allegro_audio.h>
+#include <allegro5/allegro_acodec.h>
+#include <allegro5/allegro_font.h>
+#include <allegro5/allegro_ttf.h>
 /*
    [PageOne object]
 */

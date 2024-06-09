@@ -11,16 +11,6 @@ typedef enum SceneType
     Information_L = 3,
     Quit_L = 4,
 
-    //遊戲主畫面相關頁面
-    Book_L = 5,
-
-    //商店相關頁面
-    Shop_L = 6,
-    Buy_L = 7,
-
-    //訂單相關頁面
-    Order_L = 8
-    
 } SceneType;
 void create_scene(SceneType);
 

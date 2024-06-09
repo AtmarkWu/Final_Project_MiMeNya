@@ -19,8 +19,6 @@ Elements *New_Capture(int label)
                                         pDerivedObj->y,
                                         pDerivedObj->x + pDerivedObj->width,
                                         pDerivedObj->y + pDerivedObj->height);
-    //設定互動物件(貓)
-    pObj->inter_obj[pObj->inter_len++] = CatT_L;
 
     // setting derived object function
     pObj->pDerivedObj = pDerivedObj;
@@ -32,44 +30,45 @@ Elements *New_Capture(int label)
 }
 
 void Capture_update(Elements *self) {
-    Capture *Obj = ((Capture *)(self->pDerivedObj));
-    //檢測現在是否開啟捕捉模式
-    if(key_state[ALLEGRO_KEY_C]){
-        printf("Start Capturing\n");
-        Obj->Ready = 1;
-    }
+    if(gameFunction == -1){
+        Capture *Obj = ((Capture *)(self->pDerivedObj));
+        //檢測現在是否開啟捕捉模式
+        if(key_state[ALLEGRO_KEY_C] && Obj->Ready == 0){
+            printf("Start Capturing\n");
+            Obj->Ready = 1;
+        }
+        else if(key_state[ALLEGRO_KEY_X] && Obj->Ready){
+            //如果按下C的時候是開啟捕捉模式 -> 再按一次關閉
+            Obj->Ready = 0;
+        }
 
-    //根據滑鼠位置移動hitbox跟圖片
-    Shape *hitbox = Obj->hitbox;
-    hitbox->update_center_x(hitbox, mouse.x - Obj->x);
-    hitbox->update_center_y(hitbox, mouse.y - Obj->y);
-    Obj->x = mouse.x;
-    Obj->y = mouse.y;
+        //根據滑鼠位置移動hitbox跟圖片
+        Shape *hitbox = Obj->hitbox;
+        hitbox->update_center_x(hitbox, mouse.x - Obj->x);
+        hitbox->update_center_y(hitbox, mouse.y - Obj->y);
+        Obj->x = mouse.x;
+        Obj->y = mouse.y;
+
+        //如果抓到貓咪，就關閉捕捉模式(項圈消失)
+        if(catchIT){
+            printf("Catch a Cat!\n");
+            Obj->Ready = 0;
+            catchIT = false; //復原抓取狀態
+        }
+    }
 }
 
 void Capture_interact(Elements *self, Elements *tar) {
-    Capture *Obj = ((Capture *)(self->pDerivedObj));
-    catT *tar_obj = ((catT *)(tar->pDerivedObj));
-    if(mouse_state[1] && Obj->Ready){ //如果滑鼠按下的當下是開啟捕捉模式
-        if(Obj->hitbox->overlap(Obj->hitbox, tar_obj->hitbox)){ //如果貓咪跟項圈的hitbox重疊 -> 抓到貓咪，數量++且貓咪消失
-            printf("Catch a Cat!\n");
-            CatNumber[0]++; //這邊以索引值0先代替
-            Own[0] = true;
-            Obj->Ready = 0; //抓完之後，項圈消失
-            //在CatT.c裡面會設定讓貓咪消失
-        }
-        else{ //如果hitbox沒有重疊 -> 項圈消失
-            printf("No Cat...\n");
-            Obj->Ready = 0;
-        }
-    }
+
 }
 
 void Capture_draw(Elements *self)
 {
-    Capture *Obj = ((Capture *)(self->pDerivedObj));
-    if(Obj->Ready){ //如果有開啟捕捉模式(按鍵c)
-        al_draw_bitmap(Obj->Catch, Obj->x, Obj->y, 0);
+    if(gameFunction == -1){
+        Capture *Obj = ((Capture *)(self->pDerivedObj));
+        if(Obj->Ready){ //如果有開啟捕捉模式(按鍵c)
+            al_draw_bitmap(Obj->Catch, Obj->x, Obj->y, 0);
+        }
     }
     
 }

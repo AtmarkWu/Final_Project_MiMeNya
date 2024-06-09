@@ -5,10 +5,10 @@
 #include "Information.h"
 #include "leave.h"
 //遊戲內頁面(圖鑑)的.h檔include
-#include "book.h"
+//#include "book.h"
 //商店頁面的.h檔include
-#include "shop.h"
-#include "Buy.h"
+//#include "shop.h"
+//#include "Buy.h"
 
 Scene *scene = NULL;
 void create_scene(SceneType type)
@@ -32,20 +32,6 @@ void create_scene(SceneType type)
     case Quit_L:
         scene = New_Leave(Quit_L);
         break;
-
-    case Book_L:
-        scene = New_Book(Book_L);
-        break;
-
-    case Shop_L:
-        scene = New_Shop(Shop_L);
-        break;
-    
-    case Buy_L:
-        scene = New_Buy(Buy_L);
-        break;
-
-    //留給訂單頁面(Order_L = 7)
 
     default:
         break;

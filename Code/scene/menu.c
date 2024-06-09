@@ -27,12 +27,13 @@ Scene *New_Menu(int label)
     pDerivedObj->button_W = 200;
     pDerivedObj->button_H = 120;
 
+    pDerivedObj->title_x = WIDTH / 2;
+    pDerivedObj->title_y = HEIGHT / 2;
+
     // Load sound
     pDerivedObj->song = al_load_sample("assets/sound/game_sound/menu.mp3");
     al_reserve_samples(20);
     pDerivedObj->sample_instance = al_create_sample_instance(pDerivedObj->song);
-    pDerivedObj->title_x = WIDTH / 2;
-    pDerivedObj->title_y = HEIGHT / 2;
     // Loop the song until the display closes
     al_set_sample_instance_playmode(pDerivedObj->sample_instance, ALLEGRO_PLAYMODE_ONCE);
     al_restore_default_mixer();
