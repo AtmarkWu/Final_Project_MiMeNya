@@ -80,7 +80,7 @@ Elements *New_PageOne(int label)
 void PageOne_update(Elements *self) {
     //PageOne *Obj = ((PageOne *)(self->pDerivedObj));
 
-    if(gameFunction == 0 && (Page >= 1 && Page <= 5)){ //如果在圖鑑功能內且頁數為1(1~5)
+    if(gameFunction == 0 && Page == 1){ //如果在圖鑑功能內且頁數為1(1~5)
         //滑鼠點擊事件更新
         if(mouse_state[1]){
             SeeDetail(self);
@@ -112,7 +112,7 @@ void SeeDetail(Elements *self){
 
 void PageOne_draw(Elements *self)
 {
-    if(gameFunction == 0 && (Page >= 1 && Page <= 5)){ //如果在圖鑑功能內且頁數為1
+    if(gameFunction == 0 && Page == 1){ //如果在圖鑑功能內且頁數為1
         PageOne *Obj = ((PageOne *)(self->pDerivedObj));
         int gap = 200;
         //畫出預視圖框框

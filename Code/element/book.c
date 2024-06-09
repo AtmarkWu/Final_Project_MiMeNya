@@ -24,6 +24,10 @@ Elements *New_Book(int label)
     pDerivedObj->button_W[2] = al_get_bitmap_width(pDerivedObj->button[2]);
     pDerivedObj->button_H[2] = al_get_bitmap_height(pDerivedObj->button[2]);
 
+    //翻頁判斷設定
+    pDerivedObj->pressD = 0;
+    pDerivedObj->pressA = 0;
+
     //設定字體位置
     pDerivedObj->title_x = WIDTH / 2;
     pDerivedObj->title_y = HEIGHT / 2;
@@ -125,17 +129,32 @@ void Book_DetectButtonOn(Elements *self){ //針對返回遊戲頁面鍵
 int BookTurnPage(Elements *self){
     Book *Obj = ((Book *)(self->pDerivedObj));
     float scale = 1.25;
+    int returnV = 0;
     if(key_state[ALLEGRO_KEY_D]){ //如果按下D
         al_draw_scaled_bitmap(Obj->button[1], 0, 0, Obj->button_W[1], Obj->button_H[1], Obj->X[1]-15, Obj->Y[1]-5,  Obj->button_W[1]*scale, Obj->button_H[1]*scale, 0);
-        return 1;
+        Obj->pressD = 1;
+        returnV = 0;
     }
-    else if(key_state[ALLEGRO_KEY_A]){ //如果按下A
+    else{ //如果現在這個瞬間沒有按下D而且上一刻是按住D的狀態，再進行翻頁的動作
+        if(Obj->pressD){
+            Obj->pressD = 0;
+            returnV = 1;
+        }
+    }
+    
+    if(key_state[ALLEGRO_KEY_A] && Obj->pressD == 0){ //如果按下A且前面沒有按下D
         al_draw_scaled_bitmap(Obj->button[2], 0, 0, Obj->button_W[2], Obj->button_H[2], Obj->X[2]-15, Obj->Y[2]-5,  Obj->button_W[2]*scale, Obj->button_H[2]*scale, 0);
-        return 2;
+        Obj->pressA = 1;
+        returnV = 0;
+    } //如果現在這個瞬間沒有按下D而且上一刻是按住D的狀態，再進行翻頁的動作
+    else if(!key_state[ALLEGRO_KEY_A] && Obj->pressD == 0){
+        if(Obj->pressA){
+            Obj->pressA = 0;
+            returnV = 2;
+        }
     }
-    else{
-        return 3;
-    }
+
+    return returnV;
 }
 
 void Book_destroy(Elements *self)

@@ -22,6 +22,9 @@ typedef struct _Book
     int title_x, title_y;
     ALLEGRO_FONT *font;
 
+    int pressD; //紀錄是否按下D，在按下放開的瞬間改變page的值
+    int pressA; //紀錄是否按下A，在按下放開的瞬間改變page的值
+
 } Book;
 
 Elements *New_Book(int label);
