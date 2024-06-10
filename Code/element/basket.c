@@ -17,23 +17,23 @@ Elements *New_Basket(int label)
     pDerivedObj->img3 = al_load_bitmap("assets/image/basket_green.png");
     pDerivedObj->width = al_get_bitmap_width(pDerivedObj->img);
     pDerivedObj->height = al_get_bitmap_height(pDerivedObj->img);
-    pDerivedObj->x = 250;
+    pDerivedObj->x = 170;
     pDerivedObj->y = HEIGHT - pDerivedObj->height-50;
     pDerivedObj->hitbox = New_Rectangle(pDerivedObj->x,
                                         pDerivedObj->y,
                                         pDerivedObj->x + pDerivedObj->width,
                                         pDerivedObj->y + pDerivedObj->height);
-    pDerivedObj->hitbox1 = New_Rectangle(pDerivedObj->x+200,
+    pDerivedObj->hitbox1 = New_Rectangle(pDerivedObj->x+300,
                                         pDerivedObj->y,
-                                        pDerivedObj->x + pDerivedObj->width+200,
+                                        pDerivedObj->x + pDerivedObj->width+300,
                                         pDerivedObj->y + pDerivedObj->height);
-    pDerivedObj->hitbox2 = New_Rectangle(pDerivedObj->x+400,
-                                        pDerivedObj->y,
-                                        pDerivedObj->x + pDerivedObj->width+400,
-                                        pDerivedObj->y + pDerivedObj->height);
-    pDerivedObj->hitbox3 = New_Rectangle(pDerivedObj->x+600,
+    pDerivedObj->hitbox2 = New_Rectangle(pDerivedObj->x+600,
                                         pDerivedObj->y,
                                         pDerivedObj->x + pDerivedObj->width+600,
+                                        pDerivedObj->y + pDerivedObj->height);
+    pDerivedObj->hitbox3 = New_Rectangle(pDerivedObj->x+900,
+                                        pDerivedObj->y,
+                                        pDerivedObj->x + pDerivedObj->width+900,
                                         pDerivedObj->y + pDerivedObj->height);                                                                        
     pDerivedObj->r = 30;
 
@@ -63,17 +63,17 @@ void Basket_draw(Elements *self)
     al_draw_filled_circle(circleX, circley, Obj->r, al_map_rgb(255, 255, 255));
     HowManyMeatIHave(self, circleX, circley-adjust, 1);
 
-    al_draw_bitmap(Obj->img1, Obj->x+250, Obj->y, 0);
-    al_draw_filled_circle(circleX+250, circley, Obj->r, al_map_rgb(255, 255, 255));
-    HowManyMeatIHave(self, circleX+250, circley-adjust, 2);
+    al_draw_bitmap(Obj->img1, Obj->x+300, Obj->y, 0);
+    al_draw_filled_circle(circleX+300, circley, Obj->r, al_map_rgb(255, 255, 255));
+    HowManyMeatIHave(self, circleX+300, circley-adjust, 2);
 
-    al_draw_bitmap(Obj->img2, Obj->x+500, Obj->y, 0);
-    al_draw_filled_circle(circleX+500, circley, Obj->r, al_map_rgb(255, 255, 255));
-    HowManyMeatIHave(self, circleX+500, circley-adjust, 3);
+    al_draw_bitmap(Obj->img2, Obj->x+600, Obj->y, 0);
+    al_draw_filled_circle(circleX+600, circley, Obj->r, al_map_rgb(255, 255, 255));
+    HowManyMeatIHave(self, circleX+600, circley-adjust, 3);
 
-    al_draw_bitmap(Obj->img3, Obj->x+750, Obj->y, 0);
-    al_draw_filled_circle(circleX+750, circley, Obj->r, al_map_rgb(255, 255, 255));
-    HowManyMeatIHave(self, circleX+750, circley-adjust, 4);
+    al_draw_bitmap(Obj->img3, Obj->x+900, Obj->y, 0);
+    al_draw_filled_circle(circleX+900, circley, Obj->r, al_map_rgb(255, 255, 255));
+    HowManyMeatIHave(self, circleX+900, circley-adjust, 4);
 
 }
 

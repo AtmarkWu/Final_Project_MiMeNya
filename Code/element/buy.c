@@ -79,8 +79,10 @@ Elements *New_Buy(int label)
     pDerivedObj->font = al_load_ttf_font("assets/font/GenSenRounded-M.ttc", 24, 0);
     pDerivedObj->q_x = WIDTH/2;
     pDerivedObj->q_y = HEIGHT/2;
-    pDerivedObj->NE_x = WIDTH/2;
-    pDerivedObj->NE_y = HEIGHT/2;
+
+
+    pDerivedObj->NE_x = 400;
+    pDerivedObj->NE_y = 650;
     
     //一進來初始化先把滑鼠點擊狀態清空
     mouse_state[1] = false;
@@ -144,8 +146,8 @@ void buy_draw(Elements *self) //【要被畫出的東西】
 
         //畫出對應肉泥
         if(Obj->NoEnough){ //如果有按過YES但是錢不夠
-            al_draw_bitmap(Obj->NoMoney, 350, 100, 0);
-            al_draw_text(Obj->font, al_map_rgb(0, 0, 0), Obj->NE_x, Obj->NE_y, ALLEGRO_ALIGN_CENTER, "Sorry, No Enough Money :(");
+            al_draw_bitmap(Obj->NoMoney, WIDTH/2-(al_get_bitmap_width(Obj->NoMoney)/2), 120, 0);
+            al_draw_text(Obj->font, al_map_rgb(255, 0, 0), Obj->NE_x, Obj->NE_y, ALLEGRO_ALIGN_CENTER, "Sorry, No Enough Money :(");
         }
         else{ //如果有按過YES且錢夠or沒按過YES
             switch (which_food)

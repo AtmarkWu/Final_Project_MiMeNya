@@ -105,13 +105,13 @@ Scene *New_GameScene(int label)
 
     //根據之前在menu setting決定的遊玩模式改變初始金額
     if(ModeCondition[0]){
-        TotalMoney += 99999;
+        TotalMoney = 99999;
     }
     else if(ModeCondition[1]){
-        TotalMoney += 1000;
+        TotalMoney = 1000;
     }
     else if(ModeCondition[2]){
-        TotalMoney += 100;
+        TotalMoney = 100;
     }
 
     // register 遊戲物件

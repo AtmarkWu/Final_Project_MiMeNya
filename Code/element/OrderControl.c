@@ -53,6 +53,8 @@ Elements *New_OrderControl(int label)
     //一進來初始化先把滑鼠點擊狀態清空
     mouse_state[1] = false;
 
+    pDerivedObj->click = 0;
+
     // setting derived object function
     pObj->pDerivedObj = pDerivedObj;
     pObj->Update = OrderControl_update;
@@ -78,20 +80,31 @@ void OrderControl_update(Elements *self) {
                 if(CatNumber[1]>=1 && client_set == 1){ // 第一單
                     al_play_sample_instance(Obj->Cashin_sample_instance);
                     printf("accept client1\n");
+                    Obj->click = 1;
+                }
+                else if(CatNumber[2]>=1 && client_set == 2){ // 第二單
+                    al_play_sample_instance(Obj->Cashin_sample_instance);
+                    printf("accept client2\n");
+                    Obj->click = 1;
+                }
+            }
+        }
+        else{
+            if(Obj->over_Accept_button && Obj->click){
+                if(CatNumber[1]>=1 && client_set == 1){ // 第一單
                     client_set ++;
                     gameFunction = -1; //回到遊戲內畫面
                     TotalMoney += 100;
                     CatNumber[1] -= 1;
                 }
-                if(CatNumber[2]>=1 && client_set == 2){ // 第二單
-                    al_play_sample_instance(Obj->Cashin_sample_instance);
-                    printf("accept client2\n");
+                else if(CatNumber[2]>=1 && client_set == 2){ // 第二單
                     client_set ++;
                     gameFunction = -1; //回到遊戲內畫面
                     TotalMoney += 150;
                     CatNumber[2] -= 1;
                 }
             }
+            Obj->click = 0;
         }
     }
 

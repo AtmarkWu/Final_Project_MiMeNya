@@ -33,6 +33,8 @@ typedef struct _OrderControl
     //按鈕音效
     ALLEGRO_SAMPLE *Cashin;
     ALLEGRO_SAMPLE_INSTANCE *Cashin_sample_instance;
+
+    int click;
     
 
 } OrderControl;
