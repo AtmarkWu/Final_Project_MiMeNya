@@ -14,11 +14,13 @@ typedef struct _Shop
 {
     //【所有的肉泥(不確定數量)】
     ALLEGRO_BITMAP *background_image; //【新增儲存圖片的變數】
-    ALLEGRO_BITMAP *button[3]; //【存放四種按鈕】
-    ALLEGRO_BITMAP *hightlight_button[3]; //【四種按鈕在滑鼠在上方時會發光】
-    bool over_button[3]; //【該按鈕是否與滑鼠位置重疊】
-    int X[6], Y[6]; //【按鈕各自的XY座標】
+    ALLEGRO_BITMAP *button[4]; //【存放四種按鈕】
+    ALLEGRO_BITMAP *hightlight_button[4]; //【四種按鈕在滑鼠在上方時會發光】
+    bool over_button[4]; //【該按鈕是否與滑鼠位置重疊】
+    int X[4], Y[4]; //【按鈕各自的XY座標】
+    int XH[4], YH[4];
     int button_W, button_H; //【按鈕圖片的長寬(固定)】
+    int buttonH_W, buttonH_H;
 
     //back to gamescene button
     ALLEGRO_BITMAP *back_button; //【回到頁面】
@@ -31,6 +33,10 @@ typedef struct _Shop
 
     ALLEGRO_SAMPLE *song;
     ALLEGRO_SAMPLE_INSTANCE *sample_instance;
+
+    //按鈕音效
+    ALLEGRO_SAMPLE *ButtonClick;
+    ALLEGRO_SAMPLE_INSTANCE *Click_sample_instance;
 
     //字體設定
     ALLEGRO_FONT *font;

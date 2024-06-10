@@ -4,6 +4,7 @@
 #include "gamescene.h"
 #include "Information.h"
 #include "leave.h"
+#include "Setscene.h"
 
 Scene *scene = NULL;
 void create_scene(SceneType type)
@@ -18,7 +19,9 @@ void create_scene(SceneType type)
         scene = New_GameScene(GameScene_L);
         break;
 
-    //留給設定頁面(Set_L = 2)
+    case Set_L:
+        scene = New_Setting(Set_L);
+        break;
 
     case Information_L:
         scene = New_Info(Information_L);

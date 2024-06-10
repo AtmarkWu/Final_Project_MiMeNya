@@ -38,6 +38,21 @@ typedef struct _PageOne
     int titleX, titleY;
     ALLEGRO_FONT *font;
 
+    //按鈕音效
+    ALLEGRO_SAMPLE *New;
+    ALLEGRO_SAMPLE_INSTANCE *New_sample_instance;
+
+    //按鈕音效
+    ALLEGRO_SAMPLE *ButtonClick;
+    ALLEGRO_SAMPLE_INSTANCE *Click_sample_instance;
+
+    //按鈕音效
+    ALLEGRO_SAMPLE *Close;
+    ALLEGRO_SAMPLE_INSTANCE *Close_sample_instance;
+
+    //標示是新貓或舊貓
+    int cat_state;
+
 } PageOne;
 
 Elements *New_PageOne(int label);

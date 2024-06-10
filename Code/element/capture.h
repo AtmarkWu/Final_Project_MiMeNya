@@ -13,6 +13,18 @@ typedef struct _Capture
     ALLEGRO_BITMAP *Catch;
     Shape *hitbox; // the hitbox of object
 
+    //套環音效
+    ALLEGRO_SAMPLE *Capture;
+    ALLEGRO_SAMPLE_INSTANCE *Capture_sample_instance;
+
+    //關閉套環音效
+    ALLEGRO_SAMPLE *Nothing;
+    ALLEGRO_SAMPLE_INSTANCE *Nothing_sample_instance;
+
+    //捕捉到音效
+    ALLEGRO_SAMPLE *Gotcha;
+    ALLEGRO_SAMPLE_INSTANCE *Gotcha_sample_instance;
+
     //設定模式(現在是否為顯示網子的模式)
     int Ready; //0 -> 不顯示 | 1 -> 顯示
 

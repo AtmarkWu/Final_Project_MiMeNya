@@ -11,13 +11,13 @@ Elements *New_PageOne(int label)
     Elements *pObj = New_Elements(label);
     // setting derived object member
     //設定第一頁的預視圖([0]為上方的 | [1]為下方的 || 標籤與索引值同步)
-    pDerivedObj->frame[0] = al_load_bitmap("assets/image/BookButton/frame.png");
+    pDerivedObj->frame[0] = al_load_bitmap("assets/image/Book/content_frame.png");
     pDerivedObj->decFrame[0] = al_load_bitmap("assets/image/BookButton/frame_dec.png");
     pDerivedObj->width[0] = al_get_bitmap_width(pDerivedObj->frame[0]);
     pDerivedObj->height[0] = al_get_bitmap_height(pDerivedObj->frame[0]);
     pDerivedObj->x[0] = 80;
     pDerivedObj->y[0] = 50;
-    pDerivedObj->frame[1] = al_load_bitmap("assets/image/BookButton/frame.png");
+    pDerivedObj->frame[1] = al_load_bitmap("assets/image/Book/content_frame.png");
     pDerivedObj->decFrame[1] = al_load_bitmap("assets/image/BookButton/frame_dec.png");
     pDerivedObj->width[1] = al_get_bitmap_width(pDerivedObj->frame[1]);
     pDerivedObj->height[1] = al_get_bitmap_height(pDerivedObj->frame[1]);
@@ -65,6 +65,36 @@ Elements *New_PageOne(int label)
     pDerivedObj->titleX = 630;
     pDerivedObj->titleY = (HEIGHT/2)-45;
     
+    //設定New音效
+    pDerivedObj->New = al_load_sample("assets/sound/book/New.wav");
+    al_reserve_samples(20);
+    pDerivedObj->New_sample_instance = al_create_sample_instance(pDerivedObj->New);
+    al_set_sample_instance_playmode(pDerivedObj->New_sample_instance, ALLEGRO_PLAYMODE_ONCE);
+    al_restore_default_mixer();
+    al_attach_sample_instance_to_mixer(pDerivedObj->New_sample_instance, al_get_default_mixer());
+    //設定音效音量
+    al_set_sample_instance_gain(pDerivedObj->New_sample_instance, 1);
+
+    //設定按鈕音效
+    pDerivedObj->ButtonClick = al_load_sample("assets/sound/button_press_sound.wav");
+    al_reserve_samples(20);
+    pDerivedObj->Click_sample_instance = al_create_sample_instance(pDerivedObj->ButtonClick);
+    al_set_sample_instance_playmode(pDerivedObj->Click_sample_instance, ALLEGRO_PLAYMODE_ONCE);
+    al_restore_default_mixer();
+    al_attach_sample_instance_to_mixer(pDerivedObj->Click_sample_instance, al_get_default_mixer());
+    //設定音效音量
+    al_set_sample_instance_gain(pDerivedObj->Click_sample_instance, 1);
+
+    //設定按鈕音效
+    pDerivedObj->Close = al_load_sample("assets/sound/game/No_caught.wav");
+    al_reserve_samples(20);
+    pDerivedObj->Close_sample_instance = al_create_sample_instance(pDerivedObj->Close);
+    al_set_sample_instance_playmode(pDerivedObj->Close_sample_instance, ALLEGRO_PLAYMODE_ONCE);
+    al_restore_default_mixer();
+    al_attach_sample_instance_to_mixer(pDerivedObj->Close_sample_instance, al_get_default_mixer());
+    //設定音效音量
+    al_set_sample_instance_gain(pDerivedObj->Close_sample_instance, 1);
+
     //一進來初始化先把滑鼠點擊狀態清空
     mouse_state[1] = false;
 
@@ -99,9 +129,16 @@ void SeeDetail(Elements *self){
             Obj->Open[i] = true;
             Obj->current_open = i; //設定打開的標籤為第i個
             printf("Open! in %d\n", i);
+            if(Obj->cat_state == 1){
+                al_play_sample_instance(Obj->New_sample_instance);
+                Obj->cat_state = 0;
+            }else{
+                al_play_sample_instance(Obj->Click_sample_instance);
+            }
         }
         else{ //如果在滑鼠點擊的當下不是在預視圖內，且介紹是被打開的，就關起來
             if(Obj->Open[i] == true){
+                al_play_sample_instance(Obj->Close_sample_instance);
                 Obj->Open[i] = false;
                 Obj->current_open = -1; //如果沒有任何介紹被打開，就設為-1
                 printf("Close\n");
@@ -165,20 +202,26 @@ void HowManyCatIHave(Elements *self, int Cat_n){ //逐字拆解目前數字，�
     int ten = 1;
     int index = 0;
     int gap = 0;
-    while(ten <= Cat_n){
-        ten *= 10;
-        NumberLen++;
+    if(Cat_n > 0){
+        while(ten <= Cat_n){
+            ten *= 10;
+            NumberLen++;
+        }
+        while(Cat_n != 0){
+            Number[index] = Cat_n % 10;
+            Cat_n /= 10;
+            index++;
+        }
+        for(int i = NumberLen-1 ; i >= 0 ; i--){ //到著跑，即可畫出從最小位~最高位
+            PrintNumber(self, Number[i], gap);
+            //printf("--> print: %d\n", Number[i]);
+            gap += 30; //增加x座標往後畫
+        }        
     }
-    while(Cat_n != 0){
-        Number[index] = Cat_n % 10;
-        Cat_n /= 10;
-        index++;
+    else{
+        PrintNumber(self, 0, gap);
     }
-    for(int i = NumberLen-1 ; i >= 0 ; i--){ //到著跑，即可畫出從最小位~最高位
-        PrintNumber(self, Number[i], gap);
-        //printf("--> print: %d\n", Number[i]);
-        gap += 30; //增加x座標往後畫
-    }
+
 }
 
 void PrintNumber(Elements *self, int num, int gap){ //依照現在的數字是啥就印出誰
@@ -239,6 +282,12 @@ void PageOne_destory(Elements *self)
     al_destroy_bitmap(Obj->D_content[1]);
     al_destroy_bitmap(Obj->Detail);
     al_destroy_font(Obj->font);
+    al_destroy_sample(Obj->New);
+    al_destroy_sample_instance(Obj->New_sample_instance);
+    al_destroy_sample(Obj->ButtonClick);
+    al_destroy_sample_instance(Obj->Click_sample_instance);
+    al_destroy_sample(Obj->Close);
+    al_destroy_sample_instance(Obj->Close_sample_instance);
     free(Obj);
     free(self);
 }

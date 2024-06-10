@@ -1,5 +1,5 @@
 #include "shop.h"
-#define BUTTON_NUM 3
+#define BUTTON_NUM 4
 //顯示金錢、肉泥
 /*
    [Shop function]
@@ -10,30 +10,54 @@ Elements *New_Shop(int label)
     Shop *pDerivedObj = (Shop *)malloc(sizeof(Shop));
     Elements *pObj = New_Elements(label);
     // setting derived object member
-    pDerivedObj->background_image = al_load_bitmap("assets/image/Shop/BG/shopBG.png"); //設定商店背景
+    pDerivedObj->background_image = al_load_bitmap("assets/image/Shop/BG/store_BGwithBoss.png"); //設定商店背景
 
-    //【設定3種肉泥圖案】
-    pDerivedObj->button[0] = al_load_bitmap("assets/image/Shop/item/Meat1-3.png"); //meat1
-    pDerivedObj->button[1] = al_load_bitmap("assets/image/Shop/item/Meat2-3.png"); //meat2
-    pDerivedObj->button[2] = al_load_bitmap("assets/image/Shop/item/Meat3-3.png"); //meat3
-    // pDerivedObj->button[3] = al_load_bitmap("assets/image/Shop/item/Meat3-3.png");//meat4
-    pDerivedObj->hightlight_button[0] = al_load_bitmap("assets/image/Shop/item/Meat1-3_high.png");
-    pDerivedObj->hightlight_button[1] = al_load_bitmap("assets/image/Shop/item/Meat2-3_high.png");
-    pDerivedObj->hightlight_button[2] = al_load_bitmap("assets/image/Shop/item/Meat3-3_high.png");
-    // pDerivedObj->hightlight_button[3] = al_load_bitmap("assets/image/Shop/item/Meat3-3.png");
-    pDerivedObj->button_W = 200;
-    pDerivedObj->button_H = 200;
+    //【設定4種肉泥圖案】
+    pDerivedObj->button[0] = al_load_bitmap("assets/image/Shop/item/store_redmeat.png"); //meat1
+    pDerivedObj->button[1] = al_load_bitmap("assets/image/Shop/item/store_bluemeat.png"); //meat2
+    pDerivedObj->button[2] = al_load_bitmap("assets/image/Shop/item/store_pinkmeat.png"); //meat3
+    pDerivedObj->button[3] = al_load_bitmap("assets/image/Shop/item/store_greenmeat.png");//meat4
+
+    pDerivedObj->hightlight_button[0] = al_load_bitmap("assets/image/Shop/item/store_redmeat_H.png"); //暫時沒有highlight
+    pDerivedObj->hightlight_button[1] = al_load_bitmap("assets/image/Shop/item/store_bluemeat_H.png");
+    pDerivedObj->hightlight_button[2] = al_load_bitmap("assets/image/Shop/item/store_pinkmeat_H.png");
+    pDerivedObj->hightlight_button[3] = al_load_bitmap("assets/image/Shop/item/store_greenmeat_H.png");
+
+    pDerivedObj->button_W = al_get_bitmap_width(pDerivedObj->button[0]);
+    pDerivedObj->button_H = al_get_bitmap_height(pDerivedObj->button[0]);
+    pDerivedObj->buttonH_W = al_get_bitmap_width(pDerivedObj->hightlight_button[0]);
+    pDerivedObj->buttonH_H = al_get_bitmap_height(pDerivedObj->hightlight_button[0]);
+
+    //設定肉泥選擇按鈕位置(上->右->下->左)
+    int plusX = 680;
+    int plusY = 200;
+    for(int i = 0 ; i < BUTTON_NUM ; i++){
+        pDerivedObj->X[i] = plusX;
+        pDerivedObj->Y[i] = plusY;
+        pDerivedObj->XH[i] = plusX-20;
+        pDerivedObj->YH[i] = plusY-20;
+
+        plusX += 350;
+        if(i == 1){
+            plusY += 350;
+            plusX = 680;
+        }
+    }
 
     //back to gamescene
-    pDerivedObj->back_button = al_load_bitmap("assets/image/GameButton/back.png"); 
-    pDerivedObj->highlight_back_button = al_load_bitmap("assets/image/GameButton/back_h.png"); 
-    pDerivedObj->back_button_W = 120;
-    pDerivedObj->back_button_H = 120;
+    pDerivedObj->back_button = al_load_bitmap("assets/image/Shop/Button/BackIconClose.png"); 
+    pDerivedObj->highlight_back_button = al_load_bitmap("assets/image/Shop/Button/BackIconOpen.png"); 
+    pDerivedObj->back_button_W = al_get_bitmap_width(pDerivedObj->back_button);
+    pDerivedObj->back_button_H = al_get_bitmap_height(pDerivedObj->back_button);
 
-    pDerivedObj->Money = al_load_bitmap("assets/image/GameButton/money.png");
+    //設定回到遊戲的按鈕位置
+    pDerivedObj->back_button_X = 1250;
+    pDerivedObj->back_button_Y = 40;
+
+    pDerivedObj->Money = al_load_bitmap("assets/image/Shop/item/MoneyIcon.png");
 
     // Load sound
-    pDerivedObj->song = al_load_sample("assets/sound/BGM.mp3");
+    pDerivedObj->song = al_load_sample("assets/sound/shop/ShopBGM.wav");
     al_reserve_samples(20);
     pDerivedObj->sample_instance = al_create_sample_instance(pDerivedObj->song);
     // Loop the song until the display closes
@@ -41,12 +65,22 @@ Elements *New_Shop(int label)
     al_restore_default_mixer();
     al_attach_sample_instance_to_mixer(pDerivedObj->sample_instance, al_get_default_mixer());
     // set the volume of instance
-    al_set_sample_instance_gain(pDerivedObj->sample_instance, 1);
+    al_set_sample_instance_gain(pDerivedObj->sample_instance, 0.5);
+
+    //設定按鈕音效
+    pDerivedObj->ButtonClick = al_load_sample("assets/sound/button_press_sound.wav");
+    al_reserve_samples(20);
+    pDerivedObj->Click_sample_instance = al_create_sample_instance(pDerivedObj->ButtonClick);
+    al_set_sample_instance_playmode(pDerivedObj->Click_sample_instance, ALLEGRO_PLAYMODE_ONCE);
+    al_restore_default_mixer();
+    al_attach_sample_instance_to_mixer(pDerivedObj->Click_sample_instance, al_get_default_mixer());
+    //設定音效音量
+    al_set_sample_instance_gain(pDerivedObj->Click_sample_instance, 1);
 
     //字體設定
-    pDerivedObj->font = al_load_ttf_font("assets/font/GenSenRounded-M.ttc", 16, 0);
-    pDerivedObj->title_x = 60;
-    pDerivedObj->title_y = 75;
+    pDerivedObj->font = al_load_ttf_font("assets/font/GenSenRounded-M.ttc", 32, 0);
+    pDerivedObj->title_x = 400;
+    pDerivedObj->title_y = 60;
     
     //一進來初始化先把滑鼠點擊狀態清空
     mouse_state[1] = false;
@@ -71,24 +105,27 @@ void shop_update(Elements *self) //事件更新
         if (mouse_state[1]) //檢查滑鼠左鍵按下的當下是否在按鈕上
         {
             if(Obj->over_button[0]){ //Meat1頁面
+                al_play_sample_instance(Obj->Click_sample_instance);
                 printf("Meat1\n");
                 which_food = 1;//記錄當前選擇
             }
             if(Obj->over_button[1]){ //Meat2頁面
+                al_play_sample_instance(Obj->Click_sample_instance);
                 printf("Meat2\n");
                 which_food = 2;//記錄當前選擇
             }
             if(Obj->over_button[2]){ //Meat3頁面
+                al_play_sample_instance(Obj->Click_sample_instance);
                 printf("Meat3\n");
                 which_food = 3;//記錄當前選擇
             }
-            // if(Obj->over_button[3]){ //Meat4頁面
-            //     printf("Meat4\n");
-            //     which_food = 4;//記錄當前選擇
-            //     self->scene_end = true;
-            //     window = 7;
-            // }
+            if(Obj->over_button[3]){ //Meat4頁面
+                al_play_sample_instance(Obj->Click_sample_instance);
+                printf("Meat4\n");
+                which_food = 4;//記錄當前選擇
+            }
             if(Obj->over_back_button){//回到gamescene
+                al_play_sample_instance(Obj->Click_sample_instance);
                 printf("Back to game\n");
                 al_stop_sample_instance(Obj->sample_instance);
                 gameFunction = -1;
@@ -112,23 +149,10 @@ void shop_draw(Elements *self) //要被畫出的東西
         
         al_draw_bitmap(Obj->background_image, 0, 0, 0);
 
-        //【畫出3個按鈕】
-        int increments = 50;
-        for(int i = 0 ; i < BUTTON_NUM ; i++){
-            Obj->X[i] = increments;
-            Obj->Y[i] = 450;
-            al_draw_bitmap(Obj->button[i], Obj->X[i], Obj->Y[i], 0);
-            increments += 300;
-        }
-        //【畫出Back按鈕】
-        Obj->back_button_X = 805;
-        Obj->back_button_Y = 30;
-        al_draw_bitmap(Obj->back_button, Obj->back_button_X, Obj->back_button_Y, 0);
-
+        //【畫出4個按鈕 & back】
         Shop_DetectButtonOn(self); //畫完正常按鈕後，檢查滑鼠是否停在按鈕上，並更改狀態
 
         //畫出金錢條&上面的數字
-
         al_draw_bitmap(Obj->Money, 40, 20, 0);
         HowManyMoneyIHave(self);
     }
@@ -141,21 +165,23 @@ void Shop_DetectButtonOn(Elements *self){
     //for選擇四種肉泥的按鈕
     for(int i = 0 ; i < BUTTON_NUM ; i++){
         if((mouse.x >= Obj->X[i])&&(mouse.x <= Obj->X[i]+Obj->button_W)&&(mouse.y >= Obj->Y[i])&&(mouse.y <= Obj->Y[i]+Obj->button_H)){ //如果滑鼠在按鈕範圍內
-            al_draw_bitmap(Obj->hightlight_button[i], Obj->X[i]-15, Obj->Y[i]-10, 0);
+            al_draw_bitmap(Obj->hightlight_button[i], Obj->XH[i], Obj->YH[i], 0);
             printf("on button[%d]\n", i);
             Obj->over_button[i] = true;
         }
         else{
+            al_draw_bitmap(Obj->button[i], Obj->X[i], Obj->Y[i], 0);
             Obj->over_button[i] = false;
         }
     }
 
     //for回到遊戲的按鈕
     if((mouse.x >= Obj->back_button_X)&&(mouse.x <= Obj->back_button_X+Obj->back_button_W)&&(mouse.y >= Obj->back_button_Y)&&(mouse.y <= Obj->back_button_Y+Obj->back_button_H)){ //如果滑鼠在按鈕範圍內
-            al_draw_bitmap(Obj->highlight_back_button, Obj->back_button_X-10, Obj->back_button_Y, 0);
-            Obj->over_back_button = true;
+        al_draw_bitmap(Obj->highlight_back_button, Obj->back_button_X-10, Obj->back_button_Y-10, 0);
+        Obj->over_back_button = true;
     }
     else{
+        al_draw_bitmap(Obj->back_button, Obj->back_button_X, Obj->back_button_Y, 0);
         Obj->over_back_button = false;
     }
 }
@@ -173,7 +199,7 @@ void HowManyMoneyIHave(Elements *self){ //逐字拆解目前錢錢數字，並�
         }
         for(int i = index-1 ; i >= 0 ; i--){ //到著跑，即可畫出從最小位~最高位
             PrintMoney(self, Number[i], gap);
-            gap += 10; //增加x座標往後畫
+            gap += 20; //增加x座標往後畫
         }
     }
     else{ //如果是0，就只印出0
@@ -228,11 +254,11 @@ void shop_destroy(Elements *self)
     al_destroy_bitmap(Obj->button[0]);
     al_destroy_bitmap(Obj->button[1]);
     al_destroy_bitmap(Obj->button[2]);
-    // al_destroy_bitmap(Obj->button[3]);
+    al_destroy_bitmap(Obj->button[3]);
     al_destroy_bitmap(Obj->hightlight_button[0]);
     al_destroy_bitmap(Obj->hightlight_button[1]);
     al_destroy_bitmap(Obj->hightlight_button[2]);
-    // al_destroy_bitmap(Obj->hightlight_button[3]);
+    al_destroy_bitmap(Obj->hightlight_button[3]);
 
     al_destroy_bitmap(Obj->back_button);
     al_destroy_bitmap(Obj->highlight_back_button);
@@ -241,6 +267,8 @@ void shop_destroy(Elements *self)
     al_destroy_sample(Obj->song);
     al_destroy_sample_instance(Obj->sample_instance);
     al_destroy_bitmap(Obj->Money);
+    al_destroy_sample(Obj->ButtonClick);
+    al_destroy_sample_instance(Obj->Click_sample_instance);
 
     free(Obj);
     free(self);

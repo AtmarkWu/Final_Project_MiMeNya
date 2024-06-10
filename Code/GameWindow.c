@@ -116,6 +116,9 @@ void game_init(Game *self)
     fps = al_create_timer(1.0 / FPS);
     al_register_event_source(event_queue, al_get_timer_event_source(fps));
 
+    //在這裡預先設定好模式
+    ModeCondition[0] = true; //預設為土豪模式
+
     al_start_timer(fps);
     // initialize the icon on the display
     ALLEGRO_BITMAP *icon = al_load_bitmap("assets/image/icon.png"); //【設定遊戲icon】
@@ -137,6 +140,7 @@ bool game_update(Game *self)
             create_scene(GameScene_L);
             break;
         case 2: //進入設定->【主選單】
+            create_scene(Set_L);
             break;
         case 3: //進入說明->【主選單】
             create_scene(Information_L);

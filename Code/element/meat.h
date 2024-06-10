@@ -23,6 +23,13 @@ typedef struct _Meat
     Shape *hitbox; // the hitbox of object
     ALLEGRO_COLOR color;
 
+    //拾起音效
+    ALLEGRO_SAMPLE *PickUp;
+    ALLEGRO_SAMPLE_INSTANCE *PickUp_sample_instance;
+    //放下
+    ALLEGRO_SAMPLE *PutDown;
+    ALLEGRO_SAMPLE_INSTANCE *PutDown_sample_instance;
+
     //記下目前拖出去的肉泥是哪個種類
     int currentMeat;
 } Meat;

@@ -65,17 +65,26 @@ typedef struct _GameScene
     //背景音樂
     ALLEGRO_SAMPLE *BGM;
     ALLEGRO_SAMPLE_INSTANCE *sample_instance;
+    //按鈕音效
+    ALLEGRO_SAMPLE *ButtonClick;
+    ALLEGRO_SAMPLE_INSTANCE *Click_sample_instance;
+
     //各選單按鈕(圖鑑[0]、商店[1]、訂單[2]、回到主選單[3])
     ALLEGRO_BITMAP *button[4];
     ALLEGRO_BITMAP *highlight[4]; //滑鼠在按鈕上會改變外觀作為提示(額外繪製)
     bool over_button[4]; //【該按鈕是否與滑鼠位置重疊】
-    int X[8], Y[8]; //【按鈕各自XY座標】
-    int button_w[8], button_h[8]; //【按鈕各自長寬】
+    int X[4], Y[4]; //【按鈕各自XY座標】
+    int XH[4], YH[4];
+    int button_w[4], button_h[4]; //【按鈕各自長寬】
+    int buttonH_w[4], buttonH_h[4];
+
+    int click;
+
     //暫時使用的金錢條圖片
     ALLEGRO_BITMAP *Money;
     
     //新內容通知小標籤
-    ALLEGRO_BITMAP *notify;
+    //ALLEGRO_BITMAP *notify;
 
 } GameScene;
 

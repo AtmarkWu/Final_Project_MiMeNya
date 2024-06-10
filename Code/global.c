@@ -3,8 +3,8 @@
 #include <stdbool.h>
 // variables for global usage
 const double FPS = 60.0;
-const int WIDTH = 900;
-const int HEIGHT = 672;
+const int WIDTH = 1440;
+const int HEIGHT = 1080;
 int window = 0;
 ALLEGRO_EVENT_QUEUE *event_queue = NULL;
 ALLEGRO_EVENT event;
@@ -15,6 +15,9 @@ Point mouse;
 bool debug_mode = true;
 
 int CloseGame = 0; //預設為不關閉遊戲
+
+//遊戲設定相關變數
+bool ModeCondition[3] = {false}; //紀錄每個模式是On或Off
 
 //貓咪抓捕功能相關變數
 bool catchIT = false;
@@ -34,5 +37,7 @@ int Page = 0;
 int which_food = 0;
 
 //金錢系統與肉泥持有相關
-int TotalMoney = 100; //目前持有總金額(初始先設定為100，之後debug)
+int TotalMoney = 0; //目前持有總金額(初始先設定為0，之後debug)
 int OwnMeat[MeatKind] = {0}; //目前擁有的四種肉泥各自的數量//配合which_food，從1開始才是肉泥
+
+int client_set = 1;

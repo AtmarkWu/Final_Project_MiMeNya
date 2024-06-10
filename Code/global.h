@@ -27,6 +27,8 @@ extern bool debug_mode;
 
 extern int CloseGame;
 
+extern bool ModeCondition[3]; //紀錄每個模式是On或Off
+
 //貓咪抓捕功能相關變數
 extern bool catchIT;
 
@@ -50,5 +52,7 @@ extern int which_food;
 #define MaxMoney 7 //最多7位數
 extern int TotalMoney; //當前持有總金額
 extern int OwnMeat[MeatKind]; //四種肉泥各自的持有數，從1開始才是肉泥
+
+extern int client_set;
 
 #endif

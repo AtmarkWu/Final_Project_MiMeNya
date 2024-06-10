@@ -12,15 +12,21 @@
 typedef struct _Info
 {
     ALLEGRO_FONT *font;
-    ALLEGRO_SAMPLE *song;
     ALLEGRO_BITMAP *background_image; //【新增儲存圖片的變數】
     ALLEGRO_BITMAP *button; //【存放按鈕】
     ALLEGRO_BITMAP *hightlight_button; //【按鈕在滑鼠在上方時會發光】
     bool over_button; //【該按鈕是否與滑鼠位置重疊】
-    int X[2], Y[2]; //【按鈕各自的XY座標】
+    int X, Y; //【按鈕各自的XY座標】
+    int XH, YH;
     int button_W, button_H; //【按鈕圖片的長寬(固定)】
+    int buttonH_W, buttonH_H;
 
-    ALLEGRO_SAMPLE_INSTANCE *sample_instance;
+    int click;
+
+    //設定按鈕聲音
+    ALLEGRO_SAMPLE *ButtonClick;
+    ALLEGRO_SAMPLE_INSTANCE *Click_sample_instance;
+
     int title_x, title_y;
 
 } Info;

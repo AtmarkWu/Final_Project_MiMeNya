@@ -9,10 +9,10 @@ Elements *New_Meat(int label)
 {
     Meat *pDerivedObj = (Meat *)malloc(sizeof(Meat));
     Elements *pObj = New_Elements(label);
-    pDerivedObj->img = al_load_bitmap("assets/image/meat_pink.png");
-    pDerivedObj->img1 = al_load_bitmap("assets/image/meat_red.png");
-    pDerivedObj->img2 = al_load_bitmap("assets/image/meat_green.png");
-    pDerivedObj->img3 = al_load_bitmap("assets/image/meat_blue.png");
+    pDerivedObj->img = al_load_bitmap("assets/image/meat.png");
+    pDerivedObj->img1 = al_load_bitmap("assets/image/meat.png");
+    pDerivedObj->img2 = al_load_bitmap("assets/image/meat.png");
+    pDerivedObj->img3 = al_load_bitmap("assets/image/meat.png");
     pDerivedObj->x = mouse.x;
     pDerivedObj->y = mouse.y;
     pDerivedObj->posx = 0;
@@ -40,6 +40,26 @@ Elements *New_Meat(int label)
     // setting the interact object
     pObj->inter_obj[pObj->inter_len++] = Basket_L;
 
+    //設定拾起音效
+    pDerivedObj->PickUp = al_load_sample("assets/sound/game/pick_up.wav");
+    al_reserve_samples(20);
+    pDerivedObj->PickUp_sample_instance = al_create_sample_instance(pDerivedObj->PickUp);
+    al_set_sample_instance_playmode(pDerivedObj->PickUp_sample_instance, ALLEGRO_PLAYMODE_ONCE);
+    al_restore_default_mixer();
+    al_attach_sample_instance_to_mixer(pDerivedObj->PickUp_sample_instance, al_get_default_mixer());
+    //設定音效音量
+    al_set_sample_instance_gain(pDerivedObj->PickUp_sample_instance, 1);
+
+    //設定放下音效
+    pDerivedObj->PutDown = al_load_sample("assets/sound/game/put_down.wav");
+    al_reserve_samples(20);
+    pDerivedObj->PutDown_sample_instance = al_create_sample_instance(pDerivedObj->PutDown);
+    al_set_sample_instance_playmode(pDerivedObj->PutDown_sample_instance, ALLEGRO_PLAYMODE_ONCE);
+    al_restore_default_mixer();
+    al_attach_sample_instance_to_mixer(pDerivedObj->PutDown_sample_instance, al_get_default_mixer());
+    //設定音效音量
+    al_set_sample_instance_gain(pDerivedObj->PutDown_sample_instance, 1);
+
     // setting derived object function
     pObj->pDerivedObj = pDerivedObj;
     pObj->Draw = Meat_draw;
@@ -66,6 +86,7 @@ void Meat_interact(Elements *self, Elements *tar)
         if(!mouse_state[1])
         {
             if (Obj->click){
+                al_play_sample_instance(Obj->PutDown_sample_instance);
                 Obj->meatsX[Obj->lenMeat] = mouse.x;
                 Obj->meatsY[Obj->lenMeat] = mouse.y;
                 Obj->meatType[Obj->lenMeat] = Obj->currentColor;
@@ -80,8 +101,9 @@ void Meat_interact(Elements *self, Elements *tar)
             if (Obj->hitbox->overlap(Obj->hitbox, Obj2->hitbox) && mouse_state[1])
             {
                 if(OwnMeat[1] != 0){ //如果擁有該種類的肉泥才能拖曳
+                    al_play_sample_instance(Obj->PickUp_sample_instance);
                     Obj->click = 1;
-                    Obj->color = al_map_rgb(250, 164, 147);
+                    Obj->color = al_map_rgb(222, 73, 53);
                     Obj->in = Basket_L;
                     Obj->currentColor = 1;
                     Obj->currentMeat = 1;
@@ -90,8 +112,9 @@ void Meat_interact(Elements *self, Elements *tar)
             if (Obj->hitbox->overlap(Obj->hitbox, Obj2->hitbox1) && mouse_state[1])
             {
                 if(OwnMeat[2] != 0){ //如果擁有該種類的肉泥才能拖曳
+                    al_play_sample_instance(Obj->PickUp_sample_instance);
                     Obj->click = 1;
-                    Obj->color = al_map_rgb(222, 73, 53);
+                    Obj->color = al_map_rgb(150, 191, 210);
                     Obj->in = Basket_L;
                     Obj->currentColor = 2;
                     Obj->currentMeat = 2;
@@ -100,8 +123,9 @@ void Meat_interact(Elements *self, Elements *tar)
             if (Obj->hitbox->overlap(Obj->hitbox, Obj2->hitbox2) && mouse_state[1])
             {
                 if(OwnMeat[3] != 0){ //如果擁有該種類的肉泥才能拖曳
+                    al_play_sample_instance(Obj->PickUp_sample_instance);
                     Obj->click = 1;
-                    Obj->color = al_map_rgb(96, 152, 151);
+                    Obj->color = al_map_rgb(250, 164, 147);
                     Obj->in = Basket_L;
                     Obj->currentColor = 3;
                     Obj->currentMeat = 3;     
@@ -110,8 +134,9 @@ void Meat_interact(Elements *self, Elements *tar)
             if (Obj->hitbox->overlap(Obj->hitbox, Obj2->hitbox3) && mouse_state[1])
             {
                 if(OwnMeat[4] != 0){ //如果擁有該種類的肉泥才能拖曳
+                    al_play_sample_instance(Obj->PickUp_sample_instance);
                     Obj->click = 1;
-                    Obj->color = al_map_rgb(150, 191, 210);
+                    Obj->color = al_map_rgb(96, 152, 151);
                     Obj->in = Basket_L;
                     Obj->currentColor = 4;
                     Obj->currentMeat = 4;
@@ -161,6 +186,12 @@ void Meat_destory(Elements *self)
     al_destroy_bitmap(Obj->img1);
     al_destroy_bitmap(Obj->img2);
     al_destroy_bitmap(Obj->img3);
+
+    al_destroy_sample(Obj->PickUp);
+    al_destroy_sample_instance(Obj->PickUp_sample_instance);
+
+    al_destroy_sample(Obj->PutDown);
+    al_destroy_sample_instance(Obj->PutDown_sample_instance);
 
     free(Obj->hitbox);
     free(Obj);

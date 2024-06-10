@@ -13,17 +13,21 @@ Elements *New_Buy(int label)
     pDerivedObj->background_image = al_load_bitmap("assets/image/Shop/BG/BuyBG.png"); 
 
     //放置對應肉泥圖片
-    pDerivedObj->food[0] = al_load_bitmap("assets/image/Shop/item/Meat1-3.png");
-    pDerivedObj->food[1] = al_load_bitmap("assets/image/Shop/item/Meat2-3.png");
-    pDerivedObj->food[2] = al_load_bitmap("assets/image/Shop/item/Meat3-3.png");
-    pDerivedObj->food_X = 350;
-    pDerivedObj->food_Y = 120;
+    pDerivedObj->food[0] = al_load_bitmap("assets/image/Shop/item/store_redmeat_H.png");
+    pDerivedObj->food[1] = al_load_bitmap("assets/image/Shop/item/store_bluemeat.png");
+    pDerivedObj->food[2] = al_load_bitmap("assets/image/Shop/item/store_pinkmeat.png");
+    pDerivedObj->food[3] = al_load_bitmap("assets/image/Shop/item/store_greenmeat.png");
+    pDerivedObj->food_X = WIDTH/2 - (al_get_bitmap_width(pDerivedObj->food[0])/2);
+    pDerivedObj->food_Y = 150;
 
     //設定按鍵圖片
-    pDerivedObj->button[0] = al_load_bitmap("assets/image/Shop/Button/yes.png"); //購買
-    pDerivedObj->button[1] = al_load_bitmap("assets/image/Shop/Button/no.png"); //不購買
-    pDerivedObj->hightlight_button[0] = al_load_bitmap("assets/image/Shop/Button/yes_h.png");
-    pDerivedObj->hightlight_button[1] = al_load_bitmap("assets/image/Shop/Button/no_h.png");
+    pDerivedObj->button[0] = al_load_bitmap("assets/image/Shop/Button/Yes.png"); //購買
+    pDerivedObj->hightlight_button[0] = al_load_bitmap("assets/image/Shop/Button/Yes_H.png");
+    pDerivedObj->button_W[0] = al_get_bitmap_width(pDerivedObj->button_W[0]);
+
+
+    pDerivedObj->button[1] = al_load_bitmap("assets/image/Shop/Button/No.png"); //不購買
+    pDerivedObj->hightlight_button[1] = al_load_bitmap("assets/image/Shop/Button/No_H.png");
     
     pDerivedObj->button_W = 200;
     pDerivedObj->button_H = 100;
@@ -33,9 +37,19 @@ Elements *New_Buy(int label)
     pDerivedObj->MeatPrice[1] = 10; //設定肉泥價錢
     pDerivedObj->MeatPrice[2] = 50;
     pDerivedObj->MeatPrice[3] = 70;
-    //pDerivedObj->MeatPrice[4] = 100;
+    pDerivedObj->MeatPrice[4] = 100;
 
     pDerivedObj->NoEnough = false; //一開始預設為足夠
+
+    //設定付錢音效
+    pDerivedObj->PayMoney = al_load_sample("assets/sound/shop/money.wav");
+    al_reserve_samples(20);
+    pDerivedObj->PayMoney_sample_instance = al_create_sample_instance(pDerivedObj->PayMoney);
+    al_set_sample_instance_playmode(pDerivedObj->PayMoney_sample_instance, ALLEGRO_PLAYMODE_ONCE);
+    al_restore_default_mixer();
+    al_attach_sample_instance_to_mixer(pDerivedObj->PayMoney_sample_instance, al_get_default_mixer());
+    //設定音效音量
+    al_set_sample_instance_gain(pDerivedObj->PayMoney_sample_instance, 1);
 
     //設定字體
     pDerivedObj->font = al_load_ttf_font("assets/font/GenSenRounded-M.ttc", 24, 0);
@@ -69,6 +83,7 @@ void buy_update(Elements *self) //事件更新
                     Obj->NoEnough = true;
                 }
                 else{ //錢如果足夠才會扣錢，並回到商店頁面
+                    al_play_sample_instance(Obj->PayMoney_sample_instance);
                     TotalMoney -= Obj->MeatPrice[which_food];
                     OwnMeat[which_food] += 1; //增加該肉泥的持有數
                     Obj->NoEnough = false;
@@ -119,11 +134,13 @@ void buy_draw(Elements *self) //【要被畫出的東西】
                 case 3:
                     al_draw_bitmap(Obj->food[2], Obj->food_X, Obj->food_Y, 0);
                     break;
+                case 4:
+                    al_draw_bitmap(Obj->food[3], Obj->food_X, Obj->food_Y, 0);
+                    break;
 
                 default:
                     break;
             }
-            al_draw_text(Obj->font, al_map_rgb(0, 0, 0), Obj->q_x, Obj->q_y, ALLEGRO_ALIGN_CENTER, "Are u sure to buy this food?");
         }
 
         //【畫出2個按鈕】
@@ -162,6 +179,7 @@ void buy_destroy(Elements *self)
     al_destroy_bitmap(Obj->food[0]);
     al_destroy_bitmap(Obj->food[1]);
     al_destroy_bitmap(Obj->food[2]);
+    al_destroy_bitmap(Obj->food[3]);
 
     al_destroy_bitmap(Obj->button[0]);
     al_destroy_bitmap(Obj->button[1]);
@@ -170,6 +188,9 @@ void buy_destroy(Elements *self)
     al_destroy_bitmap(Obj->hightlight_button[1]);
     
     al_destroy_bitmap(Obj->NoMoney);
+
+    al_destroy_sample(Obj->PayMoney);
+    al_destroy_sample_instance(Obj->PayMoney_sample_instance);
 
     al_destroy_font(Obj->font);
 

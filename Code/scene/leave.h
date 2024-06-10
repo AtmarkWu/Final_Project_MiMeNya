@@ -16,8 +16,16 @@ typedef struct _Leave
     ALLEGRO_BITMAP *button[2]; //【存放四種按鈕】
     ALLEGRO_BITMAP *hightlight_button[2]; //【四種按鈕在滑鼠在上方時會發光】
     bool over_button[2]; //【該按鈕是否與滑鼠位置重疊】
-    int X[4], Y[4]; //【按鈕各自的XY座標】
-    int button_W, button_H; //【按鈕圖片的長寬(固定)】
+    int X[2], Y[2]; //【按鈕各自的XY座標】
+    int XH[2], YH[2];
+    int button_W[2], button_H[2]; //【按鈕圖片的長寬(固定)】
+    int buttonH_W[2], buttonH_H[2];
+
+    int click;
+
+    //設定按鈕聲音
+    ALLEGRO_SAMPLE *ButtonClick;
+    ALLEGRO_SAMPLE_INSTANCE *Click_sample_instance;
 
     int title_x, title_y;
 } Leave;
