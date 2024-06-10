@@ -15,16 +15,20 @@ Elements *New_OrderControl(int label)
     pDerivedObj->Client[1] = al_load_bitmap("assets/image/Order/Client2.png");
 
     //回到遊戲主畫面的按鈕設定
-    pDerivedObj->button = al_load_bitmap("assets/image/GameButton/back.png");
-    pDerivedObj->highlight = al_load_bitmap("assets/image/GameButton/back_h.png");
-    pDerivedObj->width = 74;
-    pDerivedObj->height = 69;
+    pDerivedObj->button = al_load_bitmap("assets/image/Order/BackIconClose.png");
+    pDerivedObj->highlight = al_load_bitmap("assets/image/Order/BackIconOpen.png");
+    pDerivedObj->width = al_get_bitmap_width(pDerivedObj->button);
+    pDerivedObj->height = al_get_bitmap_height(pDerivedObj->button);
+    pDerivedObj->x = 1250;
+    pDerivedObj->y = 60;
 
     //accept button
     pDerivedObj->Accept = al_load_bitmap("assets/image/Order/Accept.png");
     pDerivedObj->Accept_highlight = al_load_bitmap("assets/image/Order/Accept_h.png");
-    pDerivedObj->A_Width = 202;
-    pDerivedObj->A_Height = 50;
+    pDerivedObj->A_Width = al_get_bitmap_width(pDerivedObj->Accept);
+    pDerivedObj->A_Height = al_get_bitmap_height(pDerivedObj->Accept);
+    pDerivedObj->Accept_X = 400;
+    pDerivedObj->Accept_Y = 800;
 
     //設定按鈕音效
     pDerivedObj->ButtonClick = al_load_sample("assets/sound/button_press_sound.wav");
@@ -71,21 +75,21 @@ void OrderControl_update(Elements *self) {
             }
 
             if(Obj->over_Accept_button){
-                if(CatNumber[3]>=1 && client_set == 1){ // 第一單
+                if(CatNumber[1]>=1 && client_set == 1){ // 第一單
                     al_play_sample_instance(Obj->Cashin_sample_instance);
                     printf("accept client1\n");
                     client_set ++;
                     gameFunction = -1; //回到遊戲內畫面
                     TotalMoney += 100;
-                    CatNumber[3] -= 1;
+                    CatNumber[1] -= 1;
                 }
-                if(CatNumber[1]>=1 && client_set == 2){ // 第二單
+                if(CatNumber[2]>=1 && client_set == 2){ // 第二單
                     al_play_sample_instance(Obj->Cashin_sample_instance);
                     printf("accept client2\n");
                     client_set ++;
                     gameFunction = -1; //回到遊戲內畫面
                     TotalMoney += 150;
-                    CatNumber[1] -= 1;
+                    CatNumber[2] -= 1;
                 }
             }
         }
@@ -104,19 +108,12 @@ void OrderControl_draw(Elements *self)
         al_draw_bitmap(Obj->background, 0, 0, 0); //畫出背景
         printf("in order function: %d, gameFunction = %d\n", al_get_bitmap_width(Obj->background), gameFunction);
 
-        al_draw_bitmap(Obj->Client[client_set-1], 155, 60, 0); //畫出背景
+        al_draw_bitmap(Obj->Client[client_set-1], 220, 160, 0); //畫出背景
 
         //畫出按鈕並開啟回主畫面的按鈕感應功能
-        Obj->x = 800;
-        Obj->y = 30;
-        al_draw_bitmap(Obj->button, Obj->x, Obj->y, 0);
-
-        //畫出按鈕並開啟回主畫面的按鈕感應功能
-        Obj->Accept_X = 200;
-        Obj->Accept_Y = 500;
-        al_draw_bitmap(Obj->Accept, Obj->Accept_X, Obj->Accept_Y, 0);
-
+        //畫出接單按鈕
         Order_DetectButtonOn(self);
+        
     }
     
 }
@@ -129,6 +126,7 @@ void Order_DetectButtonOn(Elements *self){
         Obj->over_button = true;
     }
     else{
+        al_draw_bitmap(Obj->button, Obj->x, Obj->y, 0);
         Obj->over_button = false;
     }
 
@@ -138,6 +136,7 @@ void Order_DetectButtonOn(Elements *self){
         Obj->over_Accept_button = true;
     }
     else{
+        al_draw_bitmap(Obj->Accept, Obj->Accept_X, Obj->Accept_Y, 0);
         Obj->over_Accept_button = false;
     }
 }

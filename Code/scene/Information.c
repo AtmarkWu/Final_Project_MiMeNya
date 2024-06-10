@@ -83,12 +83,6 @@ void Info_draw(Scene *self) //【菜單內要被畫出的東西】
 
     al_draw_bitmap(Obj->background_image, 0, 0, 0); //【先畫出背景才不會被覆蓋】
 
-    al_draw_filled_rectangle(Obj->title_x - 200, Obj->title_y - 250, Obj->title_x + 200, Obj->title_y + 250, al_map_rgb(250, 235, 215));
-    al_draw_text(Obj->font, al_map_rgb(0, 0, 0), Obj->title_x, Obj->title_y-30, ALLEGRO_ALIGN_CENTER, "This is the cutest game");
-    al_draw_text(Obj->font, al_map_rgb(0, 0, 0), Obj->title_x, Obj->title_y+30, ALLEGRO_ALIGN_CENTER, "IN THE WORLD !");
-    al_draw_text(Obj->font, al_map_rgb(0, 0, 0), Obj->title_x, Obj->title_y+100, ALLEGRO_ALIGN_CENTER, "咪");
-
-
     Info_DetectButtonOn(self); //畫完正常按鈕後，檢查滑鼠是否停在按鈕上，並更改狀態
 }
 

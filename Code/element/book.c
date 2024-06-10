@@ -45,8 +45,8 @@ Elements *New_Book(int label)
         increments += 230;
     }
 
+    pDerivedObj->cover = al_load_bitmap("assets/image/Book/book_first.png"); //圖鑑封面圖
 
-    pDerivedObj->cover = al_load_bitmap("assets/image/BookButton/cover.png"); //圖鑑封面圖
 
     //設定按鈕音效
     pDerivedObj->ButtonClick = al_load_sample("assets/sound/button_press_sound.wav");
@@ -141,7 +141,7 @@ void Book_draw(Elements *self) //【菜單內要被畫出的東西】
 
         //繪製封面裝飾
         if(Page == 0){ //如果在封面頁再畫出來
-            al_draw_bitmap(Obj->cover, 50, 30, 0);
+            al_draw_bitmap(Obj->cover, 0, 0, 0);
         }
 
         for(int i = 0 ; i < ButtonNum ; i++){

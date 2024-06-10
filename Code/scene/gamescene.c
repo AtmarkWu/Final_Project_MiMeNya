@@ -121,8 +121,9 @@ Scene *New_GameScene(int label)
     //_Register_elements(pObj, New_Character(Character_L));
     _Register_elements(pObj, New_Basket(Basket_L));
     _Register_elements(pObj, New_Meat(Meat_L));
-    _Register_elements(pObj, New_catT(CatT_L));
+    //_Register_elements(pObj, New_catT(CatT_L));
     _Register_elements(pObj, New_Capture(Capture_L));
+    _Register_elements(pObj, New_Cat(Cat_L));
 
     // register 遊戲功能頁面
     //圖鑑
@@ -201,12 +202,12 @@ void game_scene_update(Scene *self)
                 //不切換頁面，而是利用全域變數操控跳出來的畫面，同時截斷底下頁面的感應功能
                 Obj->click = 1;
             }
-            // if(Obj->over_button[3]){ //關閉遊戲(4)
-            //     //如果滑鼠按下的時候在按鈕上 -> 準備要離開
-            //     printf("Quit\n");
-            //     self->scene_end = true;
-            //     window = 4;
-            // }
+            if(Obj->over_button[3]){ //關閉遊戲(4)
+                //如果滑鼠按下的時候在按鈕上 -> 準備要離開
+                printf("Quit\n");
+                self->scene_end = true;
+                window = 4;
+            }
         }
         else{
             if(Obj->over_button[0] && Obj->click){ //進入圖鑑[0]
@@ -218,7 +219,7 @@ void game_scene_update(Scene *self)
             }
             if(Obj->over_button[2] && Obj->click){ //進入訂單管理頁面[2]
                 //不切換頁面，而是利用全域變數操控跳出來的畫面，同時截斷底下頁面的感應功能
-                gameFunction = 2;
+                // gameFunction = 2;
                 if(client_set != 3){
                     gameFunction = 2;
                 }

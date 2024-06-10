@@ -36,6 +36,10 @@ typedef struct _Buy
     ALLEGRO_SAMPLE *PayMoney;
     ALLEGRO_SAMPLE_INSTANCE *PayMoney_sample_instance;
 
+    //按鈕音效
+    ALLEGRO_SAMPLE *ButtonClick;
+    ALLEGRO_SAMPLE_INSTANCE *Click_sample_instance;
+
     ALLEGRO_FONT *font;
     int q_x, q_y; //購買詢問字體用
     int NE_x, NE_y; //錢不夠買時的標題字用

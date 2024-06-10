@@ -18,8 +18,8 @@ Scene *New_Leave(int label)
     pDerivedObj->background_image = al_load_bitmap("assets/image/sad.png"); //【設定背景】
 
     //【設定按鈕圖案】
-    pDerivedObj->button[0] = al_load_bitmap("assets/image/Menu/MenuBack.png"); //回到菜單
-    pDerivedObj->hightlight_button[0] = al_load_bitmap("assets/image/Menu/MenuBack_H.png");
+    pDerivedObj->button[0] = al_load_bitmap("assets/image/Menu/Back.png"); //回到菜單
+    pDerivedObj->hightlight_button[0] = al_load_bitmap("assets/image/Menu/Back_H.png");
     pDerivedObj->button_W[0] = al_get_bitmap_width(pDerivedObj->button[0]);
     pDerivedObj->button_H[0] = al_get_bitmap_height(pDerivedObj->button[0]);
     pDerivedObj->buttonH_W[0] = al_get_bitmap_width(pDerivedObj->hightlight_button[0]);
@@ -110,9 +110,6 @@ void Leave_draw(Scene *self) //【菜單內要被畫出的東西】
 
     al_draw_bitmap(Obj->background_image, 0, 0, 0);
     //【在顯示選單按鈕前，先畫出背景才不會被覆蓋】
-
-    al_draw_filled_rectangle(Obj->title_x - 300, Obj->title_y - 50, Obj->title_x + 300, Obj->title_y + 50, al_map_rgb(255, 255, 255));
-    al_draw_text(Obj->font, al_map_rgb(0, 0, 0), Obj->title_x, Obj->title_y, ALLEGRO_ALIGN_CENTRE, "Are you sure you are going to leave?");
 
     //依照狀態畫出四個按鈕
     Leave_DetectButtonOn(self);

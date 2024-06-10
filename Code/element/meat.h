@@ -3,6 +3,10 @@
 #include "element.h"
 #include "../scene/gamescene.h" // for element label
 #include "../shapes/Shape.h"
+#include <allegro5/allegro_audio.h>
+#include <allegro5/allegro_acodec.h>
+#include <allegro5/allegro_font.h>
+#include <allegro5/allegro_ttf.h>
 /*
    [Meat object]
 */
@@ -14,8 +18,9 @@ typedef struct _Meat
     int in;
     int click; // to know when to draw
     int currentColor;
-    int lenMeat;
-    int meatsX[100], meatsY[100], meatType[100];
+    bool deleteFlag;
+    //int lenMeat;
+    //int meatsX[100], meatsY[100], meatType[100];
     ALLEGRO_BITMAP *img;
     ALLEGRO_BITMAP *img1;
     ALLEGRO_BITMAP *img2;

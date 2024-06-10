@@ -11,6 +11,7 @@
 #include "../element/meat.h"
 #include "../element/CatT.h"
 #include "../element/capture.h"
+#include "../element/cat.h"
 
 //遊戲功能頁面相關宣告
 //圖鑑相關
@@ -40,7 +41,7 @@ typedef enum EleType
     Meat_L,
     CatT_L,    
     Capture_L,
-
+    Cat_L,
 
     //遊戲畫面內的功能頁面相關
     //圖鑑相關

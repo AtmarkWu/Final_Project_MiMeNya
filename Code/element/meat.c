@@ -1,5 +1,5 @@
 #include "meat.h"
-#include "../global.h"
+//#include "../global.h"
 #include "../shapes/Circle.h"
 #include <allegro5/allegro_primitives.h>
 //肉泥拖曳功能，若沒有該種類的肉泥(數量為0)，就無法拖曳
@@ -20,12 +20,13 @@ Elements *New_Meat(int label)
     pDerivedObj->r = 10;
     pDerivedObj->in = -1;
     pDerivedObj->click = 0;
-    pDerivedObj->lenMeat = 0;
+    pDerivedObj->deleteFlag = false;
+    lenMeat = 0;
     pDerivedObj->currentColor = 0;
     for(int i=0;i<100;i++){
-        pDerivedObj->meatsX[i] = 0;
-        pDerivedObj->meatsY[i] = 0;
-        pDerivedObj->meatType[i] = 0;
+        meatsX[i] = 0;
+        meatsY[i] = 0;
+        meatType[i] = 0;
     }
     //pDerivedObj->meatX = 0;
     //pDerivedObj->meatY = 0;
@@ -49,7 +50,7 @@ Elements *New_Meat(int label)
     al_attach_sample_instance_to_mixer(pDerivedObj->PickUp_sample_instance, al_get_default_mixer());
     //設定音效音量
     al_set_sample_instance_gain(pDerivedObj->PickUp_sample_instance, 1);
-
+    
     //設定放下音效
     pDerivedObj->PutDown = al_load_sample("assets/sound/game/put_down.wav");
     al_reserve_samples(20);
@@ -87,10 +88,10 @@ void Meat_interact(Elements *self, Elements *tar)
         {
             if (Obj->click){
                 al_play_sample_instance(Obj->PutDown_sample_instance);
-                Obj->meatsX[Obj->lenMeat] = mouse.x;
-                Obj->meatsY[Obj->lenMeat] = mouse.y;
-                Obj->meatType[Obj->lenMeat] = Obj->currentColor;
-                Obj->lenMeat++;
+                meatsX[lenMeat] = mouse.x;
+                meatsY[lenMeat] = mouse.y;
+                meatType[lenMeat] = Obj->currentColor;
+                lenMeat++;
                 OwnMeat[Obj->currentMeat]--; //拖曳出去放開後，持有數減一
             }
             Obj->click = 0;
@@ -157,24 +158,10 @@ void Meat_draw(Elements *self)
         {
             al_draw_circle(Obj->x, Obj->y, Obj->r, Obj->color, 10);
         }
-        for(int i=0;i<Obj->lenMeat;i++){
+        for(int i=0;i<lenMeat;i++){
             //al_draw_bitmap(Obj->img1, Obj->meatsX[i], Obj->meatsY[i], 0);
-            switch (Obj->meatType[i])   
-            {
-            case 1:
-                al_draw_bitmap(Obj->img, Obj->meatsX[i], Obj->meatsY[i]-45, 0);
-                break;
-            case 2:
-                al_draw_bitmap(Obj->img1, Obj->meatsX[i], Obj->meatsY[i]-45, 0);
-                break;
-            case 3:
-                al_draw_bitmap(Obj->img2, Obj->meatsX[i], Obj->meatsY[i]-45, 0);
-                break;
-            case 4:
-                al_draw_bitmap(Obj->img3, Obj->meatsX[i], Obj->meatsY[i]-45, 0);
-                break;
-            default:
-                break;
+            if(meatType[i] == 1 || meatType[i] == 2 || meatType[i] == 3 || meatType[i] == 4){
+                al_draw_bitmap(Obj->img, meatsX[i]-35, meatsY[i]-10, 0);
             }
         }
     }

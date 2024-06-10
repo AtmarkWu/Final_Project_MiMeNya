@@ -36,7 +36,7 @@ extern bool catchIT;
 extern int gameFunction;
 
 //圖鑑相關變數設定
-#define CatTotalKind 4
+#define CatTotalKind 6
 #define BookPage 4
 extern int CatNumber[CatTotalKind]; //該種類貓咪目前持有幾隻
 extern bool NewCatOrNot[CatTotalKind]; //該種類貓咪是否為新的貓(true->new；false->old)
@@ -52,6 +52,10 @@ extern int which_food;
 #define MaxMoney 7 //最多7位數
 extern int TotalMoney; //當前持有總金額
 extern int OwnMeat[MeatKind]; //四種肉泥各自的持有數，從1開始才是肉泥
+
+//肉泥與貓咪生成
+extern int meatsX[100], meatsY[100], meatType[100], posx[100];
+extern int lenMeat;
 
 extern int client_set;
 

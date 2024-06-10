@@ -40,4 +40,8 @@ int which_food = 0;
 int TotalMoney = 0; //目前持有總金額(初始先設定為0，之後debug)
 int OwnMeat[MeatKind] = {0}; //目前擁有的四種肉泥各自的數量//配合which_food，從1開始才是肉泥
 
+//肉泥與貓咪生成
+int meatsX[100], meatsY[100], meatType[100], posx[100];
+int lenMeat;
+
 int client_set = 1;

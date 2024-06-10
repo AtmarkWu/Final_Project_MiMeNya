@@ -23,14 +23,28 @@ Elements *New_Buy(int label)
     //設定按鍵圖片
     pDerivedObj->button[0] = al_load_bitmap("assets/image/Shop/Button/Yes.png"); //購買
     pDerivedObj->hightlight_button[0] = al_load_bitmap("assets/image/Shop/Button/Yes_H.png");
-    pDerivedObj->button_W[0] = al_get_bitmap_width(pDerivedObj->button_W[0]);
-
+    pDerivedObj->button_W[0] = al_get_bitmap_width(pDerivedObj->button[0]);
+    pDerivedObj->button_H[0] = al_get_bitmap_height(pDerivedObj->button[0]);
+    pDerivedObj->buttonH_W[0] = al_get_bitmap_width(pDerivedObj->hightlight_button[0]);
+    pDerivedObj->buttonH_H[0] = al_get_bitmap_height(pDerivedObj->hightlight_button[0]);
 
     pDerivedObj->button[1] = al_load_bitmap("assets/image/Shop/Button/No.png"); //不購買
     pDerivedObj->hightlight_button[1] = al_load_bitmap("assets/image/Shop/Button/No_H.png");
-    
-    pDerivedObj->button_W = 200;
-    pDerivedObj->button_H = 100;
+    pDerivedObj->button_W[1] = al_get_bitmap_width(pDerivedObj->button[1]);
+    pDerivedObj->button_H[1] = al_get_bitmap_height(pDerivedObj->button[1]);
+    pDerivedObj->buttonH_W[1] = al_get_bitmap_width(pDerivedObj->hightlight_button[1]);
+    pDerivedObj->buttonH_H[1] = al_get_bitmap_height(pDerivedObj->hightlight_button[1]);
+
+    //設置按鈕位置
+    int increments = 300;
+    for(int i = 0 ; i < BUTTON_NUM ; i++){
+        pDerivedObj->X[i] = increments;
+        pDerivedObj->Y[i] = 700;
+        pDerivedObj->XH[i] = increments-10;
+        pDerivedObj->YH[i] = 700;
+        increments += 600;
+    }
+    pDerivedObj->Y[1] += 20; //No按鍵微調
 
     //設定錢不夠時的圖片
     pDerivedObj->NoMoney = al_load_bitmap("assets/image/Shop/item/NoEnoughMoney.png");
@@ -40,6 +54,16 @@ Elements *New_Buy(int label)
     pDerivedObj->MeatPrice[4] = 100;
 
     pDerivedObj->NoEnough = false; //一開始預設為足夠
+
+    //設定按鈕音效
+    pDerivedObj->ButtonClick = al_load_sample("assets/sound/button_press_sound.wav");
+    al_reserve_samples(20);
+    pDerivedObj->Click_sample_instance = al_create_sample_instance(pDerivedObj->ButtonClick);
+    al_set_sample_instance_playmode(pDerivedObj->Click_sample_instance, ALLEGRO_PLAYMODE_ONCE);
+    al_restore_default_mixer();
+    al_attach_sample_instance_to_mixer(pDerivedObj->Click_sample_instance, al_get_default_mixer());
+    //設定音效音量
+    al_set_sample_instance_gain(pDerivedObj->Click_sample_instance, 1);
 
     //設定付錢音效
     pDerivedObj->PayMoney = al_load_sample("assets/sound/shop/money.wav");
@@ -92,6 +116,7 @@ void buy_update(Elements *self) //事件更新
                 }
             }
             if(Obj->over_button[1]){ //NO按鈕
+                al_play_sample_instance(Obj->Click_sample_instance);
                 printf("No\n");
                 Obj->NoEnough = false;
                 //復原狀態，讓下一次可以先顯示肉泥，按過YES發現不夠錢再顯示
@@ -143,15 +168,6 @@ void buy_draw(Elements *self) //【要被畫出的東西】
             }
         }
 
-        //【畫出2個按鈕】
-        int increments = 150;
-        for(int i = 0 ; i < BUTTON_NUM ; i++){
-            Obj->X[i] = increments;
-            Obj->Y[i] = 450;
-            al_draw_bitmap(Obj->button[i], Obj->X[i], Obj->Y[i], 0);
-            increments += 350;
-        }
-
         Buy_DetectButtonOn(self); //畫完正常按鈕後，檢查滑鼠是否停在按鈕上，並更改狀態        
     }
 
@@ -160,11 +176,12 @@ void buy_draw(Elements *self) //【要被畫出的東西】
 void Buy_DetectButtonOn(Elements *self){
     Buy *Obj = ((Buy *)(self->pDerivedObj));
     for(int i = 0 ; i < BUTTON_NUM ; i++){
-        if((mouse.x >= Obj->X[i])&&(mouse.x <= Obj->X[i]+Obj->button_W)&&(mouse.y >= Obj->Y[i])&&(mouse.y <= Obj->Y[i]+Obj->button_H)){ //如果滑鼠在按鈕範圍內
-            al_draw_bitmap(Obj->hightlight_button[i], Obj->X[i]-15, Obj->Y[i]-10, 0);
+        if((mouse.x >= Obj->X[i])&&(mouse.x <= Obj->X[i]+Obj->button_W[i])&&(mouse.y >= Obj->Y[i])&&(mouse.y <= Obj->Y[i]+Obj->button_H[i])){ //如果滑鼠在按鈕範圍內
+            al_draw_bitmap(Obj->hightlight_button[i], Obj->XH[i], Obj->YH[i], 0);
             Obj->over_button[i] = true;
         }
         else{
+            al_draw_bitmap(Obj->button[i], Obj->X[i], Obj->Y[i], 0);
             Obj->over_button[i] = false;
         }
     }
@@ -191,6 +208,8 @@ void buy_destroy(Elements *self)
 
     al_destroy_sample(Obj->PayMoney);
     al_destroy_sample_instance(Obj->PayMoney_sample_instance);
+    al_destroy_sample(Obj->ButtonClick);
+    al_destroy_sample_instance(Obj->Click_sample_instance);
 
     al_destroy_font(Obj->font);
 

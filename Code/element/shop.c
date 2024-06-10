@@ -51,8 +51,8 @@ Elements *New_Shop(int label)
     pDerivedObj->back_button_H = al_get_bitmap_height(pDerivedObj->back_button);
 
     //設定回到遊戲的按鈕位置
-    pDerivedObj->back_button_X = 1250;
-    pDerivedObj->back_button_Y = 40;
+    pDerivedObj->back_button_X = 1300;
+    pDerivedObj->back_button_Y = 80;
 
     pDerivedObj->Money = al_load_bitmap("assets/image/Shop/item/MoneyIcon.png");
 
@@ -81,6 +81,17 @@ Elements *New_Shop(int label)
     pDerivedObj->font = al_load_ttf_font("assets/font/GenSenRounded-M.ttc", 32, 0);
     pDerivedObj->title_x = 400;
     pDerivedObj->title_y = 60;
+
+    //chatBox
+    pDerivedObj->chatBox[0] = al_load_bitmap("assets/image/Shop/chatBox/chatBox1.png"); 
+    pDerivedObj->chatBox[1] = al_load_bitmap("assets/image/Shop/chatBox/chatBox2.png"); 
+    pDerivedObj->chatBox[2] = al_load_bitmap("assets/image/Shop/chatBox/chatBox3.png"); 
+    pDerivedObj->shopkeeper_W = al_get_bitmap_width(pDerivedObj->chatBox[0]);
+    pDerivedObj->shopkeeper_H = al_get_bitmap_height(pDerivedObj->chatBox[0]);
+    pDerivedObj->shopkeeper_X = 50;
+    pDerivedObj->shopkeeper_Y = 350;
+    pDerivedObj->chatNumber = 1;
+    pDerivedObj->click = 0;
     
     //一進來初始化先把滑鼠點擊狀態清空
     mouse_state[1] = false;
@@ -130,7 +141,24 @@ void shop_update(Elements *self) //事件更新
                 al_stop_sample_instance(Obj->sample_instance);
                 gameFunction = -1;
             }
-        }        
+
+            if(Obj->over_shopkeeper){
+                printf("new chat\n");
+                printf("chatNumber = %d\n", Obj->chatNumber);
+                Obj->click = 1;
+            }
+        }
+        else{
+            if(Obj->over_shopkeeper && Obj->click){
+                printf("lift mouse\n");
+                Obj->chatNumber++;
+                if(Obj->chatNumber==3){
+                    Obj->chatNumber %= 3;
+                }
+                Obj->click = 0;
+            }
+        }
+
     }
 
     
@@ -152,11 +180,29 @@ void shop_draw(Elements *self) //要被畫出的東西
         //【畫出4個按鈕 & back】
         Shop_DetectButtonOn(self); //畫完正常按鈕後，檢查滑鼠是否停在按鈕上，並更改狀態
 
+        //chatBox
+        Obj->chatBox_X = 50;
+        Obj->chatBox_Y = 650;
+        al_draw_bitmap(Obj->chatBox[Obj->chatNumber], Obj->chatBox_X, Obj->chatBox_Y, 0);
+        Touch_Shopkeeper(self); //有無碰到老闆
+
         //畫出金錢條&上面的數字
         al_draw_bitmap(Obj->Money, 40, 20, 0);
         HowManyMoneyIHave(self);
     }
 
+}
+
+void Touch_Shopkeeper(Elements *self){
+
+    Shop *Obj = ((Shop *)(self->pDerivedObj));
+    if((mouse.x >= Obj->shopkeeper_X)&&(mouse.x <= Obj->shopkeeper_X+Obj->shopkeeper_W)&&(mouse.y >= Obj->shopkeeper_Y)&&(mouse.y <= Obj->shopkeeper_Y+Obj->shopkeeper_H)){ //如果滑鼠在按鈕範圍內
+        printf("on shopkeeper\n");
+        Obj->over_shopkeeper = true;
+    }
+    else{
+        Obj->over_shopkeeper = false;
+    }
 }
 
 void Shop_DetectButtonOn(Elements *self){
@@ -259,6 +305,10 @@ void shop_destroy(Elements *self)
     al_destroy_bitmap(Obj->hightlight_button[1]);
     al_destroy_bitmap(Obj->hightlight_button[2]);
     al_destroy_bitmap(Obj->hightlight_button[3]);
+
+    al_destroy_bitmap(Obj->chatBox[0]);
+    al_destroy_bitmap(Obj->chatBox[1]);
+    al_destroy_bitmap(Obj->chatBox[2]);
 
     al_destroy_bitmap(Obj->back_button);
     al_destroy_bitmap(Obj->highlight_back_button);

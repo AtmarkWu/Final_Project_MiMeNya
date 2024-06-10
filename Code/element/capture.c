@@ -50,6 +50,9 @@ Elements *New_Capture(int label)
     //設定音效音量
     al_set_sample_instance_gain(pDerivedObj->Gotcha_sample_instance, 1);
 
+    // setting the interact object
+    pObj->inter_obj[pObj->inter_len++] = Cat_L;
+
     // setting derived object function
     pObj->pDerivedObj = pDerivedObj;
     pObj->Update = Capture_update;
@@ -92,6 +95,25 @@ void Capture_update(Elements *self) {
 }
 
 void Capture_interact(Elements *self, Elements *tar) {
+    Capture *Obj = ((Capture *)(self->pDerivedObj));
+    Cat *tar_Obj = ((Cat *)(tar->pDerivedObj));
+    if(mouse_state[1] && Obj->Ready){ //如果按下滑鼠的同時是開啟捕捉模式
+        //遍歷目前被放出來的肉泥陣列
+        for(int i = 0 ; i < lenMeat ; i++){
+            printf("## Check %d cat\n", i);
+            if((mouse.x >= meatsX[i]) && (mouse.x <= meatsX[i]+tar_Obj->width) && (mouse.y >= meatsY[i]) && (mouse.y <= meatsY[i]+tar_Obj->height)){ //如果滑鼠所在範圍跟貓咪重疊
+                if(meatType[i] >= 5 && meatType[i] <= 8){
+                    printf("Catch it! Type is %d\n", meatType[i]);
+                    CatNumber[meatType[i]-4]++; //這邊以索引值0先代替
+                    Own[meatType[i]-4] = true;
+                    TotalOwnCat++;
+                    catchIT = true;
+                    meatType[i] = 9; //讓這隻被抓到的貓咪不要在cat.c裡面被畫出來                    
+                }
+
+            }
+        }
+    }
 
 }
 

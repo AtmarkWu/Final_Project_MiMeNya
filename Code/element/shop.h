@@ -42,6 +42,14 @@ typedef struct _Shop
     ALLEGRO_FONT *font;
     int title_x, title_y;
 
+    //chatbox
+    ALLEGRO_BITMAP *chatBox[3]; 
+    bool over_shopkeeper; //【該按鈕是否與滑鼠位置重疊】
+    int chatBox_X, chatBox_Y;
+    int shopkeeper_X, shopkeeper_Y;
+    int shopkeeper_W, shopkeeper_H;
+    int chatNumber;
+    int click;
 
 
 } Shop;
@@ -55,5 +63,7 @@ void shop_destroy(Elements *self);
 void Shop_DetectButtonOn(Elements *self);
 void HowManyMoneyIHave(Elements *self);
 void PrintMoney(Elements *self, int num, int gap);
+
+void Touch_Shopkeeper(Elements *self);
 
 #endif

@@ -23,17 +23,17 @@ typedef struct _PageTwo
     ALLEGRO_BITMAP *NoContent; //沒有該貓咪時顯示的圖片(預設)
     ALLEGRO_BITMAP *Content[2]; //有該貓咪時顯示的圖片
     ALLEGRO_BITMAP *LackSign; //沒有該貓咪的標籤
-    ALLEGRO_BITMAP *GetSign; //擁有該貓咪的標籤
+    ALLEGRO_BITMAP *GetSign[2]; //擁有該貓咪的標籤
     ALLEGRO_BITMAP *NewSign; //該貓咪為新獲得的標籤
 
     //細節放大圖設定
     bool Open[2]; //玩家是否有關閉or開啟預視圖
-    ALLEGRO_BITMAP *Detail;
+    ALLEGRO_BITMAP *Detail[2];
     int current_open; //紀錄現在正打開的細節放大圖是誰
     //細節放大圖內容設定
     int Dx[2], Dy[2];
     int D_w[2], D_h[2];
-    ALLEGRO_BITMAP *D_content[2]; //該貓咪的全貌圖
+
     //細節圖要顯示的貓咪持有數設定
     int titleX, titleY;
     ALLEGRO_FONT *font;

@@ -12,59 +12,49 @@ Elements *New_PageTwo(int label)
     Elements *pObj = New_Elements(label);
     // setting derived object member
     //設定第二頁的預視圖([0]為上方的 | [1]為下方的 || 標籤與索引值同步)
-    pDerivedObj->frame[0] = al_load_bitmap("assets/image/BookButton/frame.png");
-    pDerivedObj->decFrame[0] = al_load_bitmap("assets/image/BookButton/frame_dec.png");
+    pDerivedObj->frame[0] = al_load_bitmap("assets/image/Book/content_frame.png");
+    pDerivedObj->decFrame[0] = al_load_bitmap("assets/image/Book/content_frame.png");
     pDerivedObj->width[0] = al_get_bitmap_width(pDerivedObj->frame[0]);
     pDerivedObj->height[0] = al_get_bitmap_height(pDerivedObj->frame[0]);
-    pDerivedObj->x[0] = 80;
-    pDerivedObj->y[0] = 50;
-    pDerivedObj->frame[1] = al_load_bitmap("assets/image/BookButton/frame.png");
-    pDerivedObj->decFrame[1] = al_load_bitmap("assets/image/BookButton/frame_dec.png");
+    pDerivedObj->x[0] = 150;
+    pDerivedObj->y[0] = 100;
+    pDerivedObj->frame[1] = al_load_bitmap("assets/image/Book/content_frame.png");
+    pDerivedObj->decFrame[1] = al_load_bitmap("assets/image/Book/content_frame.png");
     pDerivedObj->width[1] = al_get_bitmap_width(pDerivedObj->frame[1]);
     pDerivedObj->height[1] = al_get_bitmap_height(pDerivedObj->frame[1]);
-    pDerivedObj->x[1] = 80;
-    pDerivedObj->y[1] = pDerivedObj->x[0]+250;
+    pDerivedObj->x[1] = 150;
+    pDerivedObj->y[1] = pDerivedObj->x[0]+400;
 
     //其他要顯示在【預視圖】上面的東西(貓咪、資料、是否持有)
-    int gap = 65;
-    pDerivedObj->NoContent = al_load_bitmap("assets/image/BookButton/NO.png");
-    pDerivedObj->Content[0] = al_load_bitmap("assets/image/BookButton/cat3.png");
+    int gap = 100;
+    pDerivedObj->NoContent = al_load_bitmap("assets/image/Book/didnt_get.png");
+    pDerivedObj->Content[0] = al_load_bitmap("assets/image/Book/book_cat3.png");
     pDerivedObj->C_w[0] = al_get_bitmap_width(pDerivedObj->Content[0]);
     pDerivedObj->C_h[0] = al_get_bitmap_height(pDerivedObj->Content[0]);
     pDerivedObj->Cx[0] = pDerivedObj->x[0]+gap; //第一格的x偏移
     pDerivedObj->Cy[0] = pDerivedObj->y[0]+((pDerivedObj->height[0])/2)-((pDerivedObj->C_h[0])/2); //第一格的y置中
-    pDerivedObj->Content[1] = al_load_bitmap("assets/image/BookButton/cat4.png");
+    pDerivedObj->Content[1] = al_load_bitmap("assets/image/Book/book_cat4.png");
     pDerivedObj->C_w[1] = al_get_bitmap_width(pDerivedObj->Content[1]);
     pDerivedObj->C_h[1] = al_get_bitmap_height(pDerivedObj->Content[1]);
     pDerivedObj->Cx[1] = pDerivedObj->x[1]+gap; //第二格的x偏移
     pDerivedObj->Cy[1] = pDerivedObj->y[1]+((pDerivedObj->height[1])/2)-((pDerivedObj->C_h[1])/2); //第二格的y置中
     //標籤設置
-    pDerivedObj->LackSign = al_load_bitmap("assets/image/BookButton/lack.png");
-    pDerivedObj->GetSign = al_load_bitmap("assets/image/BookButton/get.png");
-    pDerivedObj->NewSign = al_load_bitmap("assets/image/BookButton/Type_new.png");
+    pDerivedObj->LackSign = al_load_bitmap("assets/image/Book/blocked.png");
+    pDerivedObj->GetSign[0] = al_load_bitmap("assets/image/Book/book_no3mi.png");
+    pDerivedObj->GetSign[1] = al_load_bitmap("assets/image/Book/book_no4mi.png");
+    pDerivedObj->NewSign = al_load_bitmap("assets/image/Book/New.png");
 
     //細節圖背景設定
-    pDerivedObj->Detail = al_load_bitmap("assets/image/BookButton/detail.png");
+    pDerivedObj->Detail[0] = al_load_bitmap("assets/image/Book/no3_mi.png");
+    pDerivedObj->Detail[1] = al_load_bitmap("assets/image/Book/no4_mi.png");
     pDerivedObj->Open[0] = false; //對應到第一格
     pDerivedObj->Open[1] = false; //對應到第二格
 
     //其他要顯示在【介紹】上面的東西(貓咪、資料、是否為新獲得)
-    int posX = 160;
-    int posY = 250;
-    pDerivedObj->D_content[0] = al_load_bitmap("assets/image/BookButton/cat3_d.png");
-    pDerivedObj->D_w[0] = al_get_bitmap_width(pDerivedObj->D_content[0]);
-    pDerivedObj->D_h[0] = al_get_bitmap_height(pDerivedObj->D_content[0]);
-    pDerivedObj->Dx[0] = posX;
-    pDerivedObj->Dy[0] = posY;
-    pDerivedObj->D_content[1] = al_load_bitmap("assets/image/BookButton/cat4_d.png");
-    pDerivedObj->D_w[1] = al_get_bitmap_width(pDerivedObj->D_content[1]);
-    pDerivedObj->D_h[1] = al_get_bitmap_height(pDerivedObj->D_content[1]);
-    pDerivedObj->Dx[1] = posX+50;
-    pDerivedObj->Dy[1] = posY-50;
     //貓咪持有數字體設定
-    pDerivedObj->font = al_load_ttf_font("assets/font/GenSenRounded-M.ttc", 36, 0);
-    pDerivedObj->titleX = 630;
-    pDerivedObj->titleY = (HEIGHT/2)-45;
+    pDerivedObj->font = al_load_ttf_font("assets/font/GenSenRounded-M.ttc", 48, 0);
+    pDerivedObj->titleX = 1000;
+    pDerivedObj->titleY = (HEIGHT/2)-65;
     
     //設定New音效
     pDerivedObj->New = al_load_sample("assets/sound/book/New.wav");
@@ -154,39 +144,39 @@ void PageTwo_draw(Elements *self)
 {
     if(gameFunction == 0 && Page == 2){ //如果在圖鑑功能內且頁數為2
         PageTwo *Obj = ((PageTwo *)(self->pDerivedObj));
-        int gap = 200;
+        int gap = 250;
         //畫出預視圖框框
         for(int i = 0 ; i < FrameUD ; i++){
-            al_draw_bitmap(Obj->decFrame[i], Obj->x[i]-55, Obj->y[i]-20, 0);
+            al_draw_bitmap(Obj->decFrame[i], Obj->x[i], Obj->y[i], 0);
             //畫出要顯示在上面的貓咪縮圖、資訊等等
-            if(Own[i+2]){ //如果是已經擁有的貓 -> 顯示縮圖(因為是第二頁，所以往後2格)
+            if(Own[i+3]){ //如果是已經擁有的貓 -> 顯示縮圖(因為是第二頁，所以往後2格)
                 al_draw_bitmap(Obj->Content[i], Obj->Cx[i], Obj->Cy[i], 0);
-                if(NewCatOrNot[i+2]){ //如果是新獲得的貓 -> 顯示New
-                    al_draw_bitmap(Obj->NewSign, Obj->Cx[i]+gap, Obj->Cy[i], 0);
+                
+                if(NewCatOrNot[i+3]){ //如果是新獲得的貓 -> 顯示New
+                    al_draw_bitmap(Obj->NewSign, Obj->Cx[i]+gap-50, Obj->Cy[i]+10, 0);
                 }
                 else{ //如果不是新獲得的 -> 顯示get
-                    al_draw_bitmap(Obj->GetSign, Obj->Cx[i]+gap, Obj->Cy[i], 0);
+                    al_draw_bitmap(Obj->GetSign[i], Obj->Cx[i]+gap, Obj->Cy[i]+80, 0);
                 }
             }
             else{ //否則顯示未知&缺少
                 al_draw_bitmap(Obj->NoContent, Obj->Cx[i], Obj->Cy[i], 0);
-                al_draw_bitmap(Obj->LackSign, Obj->Cx[i]+gap, Obj->Cy[i], 0);
+                al_draw_bitmap(Obj->LackSign, Obj->Cx[i]+gap, Obj->Cy[i]+80, 0);
             }
         }
 
         //根據Open跟current_open決定是否畫出介紹圖
         for(int i = 0 ; i < FrameUD ; i++){
             //如果介紹有被打開且標籤對應正確，而且該貓咪已獲得過
-            if(Obj->Open[i] && Obj->current_open == i && Own[i+2]){ 
+            if(Obj->Open[i] && Obj->current_open == i && Own[i+3]){ 
                 //畫出該細節圖應該要有的內容(主圖、貓咪、介紹、持有數等等)
-                al_draw_bitmap(Obj->Detail, 0, 0, 0);
-                al_draw_bitmap(Obj->D_content[i], Obj->Dx[i], Obj->Dy[i], 0);
+                al_draw_bitmap(Obj->Detail[i], 0, 0, 0);
                 //呼叫函式畫出持有數
-                HowManyCatIHave2(self, CatNumber[i+2]);
+                HowManyCatIHave2(self, CatNumber[i+3]);
                 //printf("---> %d\n", CatNumber[0]);
-                if(NewCatOrNot[i+2]){ //如果該貓咪是新的 -> 點進來後已經看過內容(不再是新的)
+                if(NewCatOrNot[i+3]){ //如果該貓咪是新的 -> 點進來後已經看過內容(不再是新的)
                     // -> 在預視圖要改成顯示get
-                    NewCatOrNot[i+2] = false;
+                    NewCatOrNot[i+3] = false;
                 }
             }
         }
@@ -276,12 +266,12 @@ void PageTwo_destory(Elements *self)
     al_destroy_bitmap(Obj->Content[0]);
     al_destroy_bitmap(Obj->Content[1]);
     al_destroy_bitmap(Obj->LackSign);
-    al_destroy_bitmap(Obj->GetSign);
+    al_destroy_bitmap(Obj->GetSign[0]);
+    al_destroy_bitmap(Obj->GetSign[1]);
     al_destroy_bitmap(Obj->NewSign);
     //清除【介紹】上資訊圖片&字體
-    al_destroy_bitmap(Obj->D_content[0]);
-    al_destroy_bitmap(Obj->D_content[1]);
-    al_destroy_bitmap(Obj->Detail);
+    al_destroy_bitmap(Obj->Detail[0]);
+    al_destroy_bitmap(Obj->Detail[1]);
     al_destroy_font(Obj->font);
     al_destroy_sample(Obj->New);
     al_destroy_sample_instance(Obj->New_sample_instance);

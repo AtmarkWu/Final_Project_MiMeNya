@@ -49,7 +49,7 @@ Scene *New_Menu(int label)
     pDerivedObj->buttonH_H[3] = al_get_bitmap_height(pDerivedObj->hightlight_button[3]);
 
     //設定按鈕放置位置
-    int increase = 330;
+    int increase = 360;
     for(int i = 0 ; i < BUTTON_NUM ; i++){
         pDerivedObj->X[i] = (WIDTH/2) - (pDerivedObj->button_W[i]/2); //X軸置中放置
         pDerivedObj->Y[i] = increase;
