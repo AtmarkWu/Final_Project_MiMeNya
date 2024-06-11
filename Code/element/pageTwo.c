@@ -154,6 +154,7 @@ void PageTwo_draw(Elements *self)
                 
                 if(NewCatOrNot[i+3]){ //如果是新獲得的貓 -> 顯示New
                     al_draw_bitmap(Obj->NewSign, Obj->Cx[i]+gap-50, Obj->Cy[i]+10, 0);
+                    Obj->cat_state = 1;
                 }
                 else{ //如果不是新獲得的 -> 顯示get
                     al_draw_bitmap(Obj->GetSign[i], Obj->Cx[i]+gap, Obj->Cy[i]+80, 0);

@@ -153,6 +153,7 @@ void PageOne_draw(Elements *self)
                 if(NewCatOrNot[i+1]){ //如果是新獲得的貓 -> 顯示New
                     printf("%d cat is New\n", i);
                     al_draw_bitmap(Obj->NewSign, Obj->Cx[i]+gap-50, Obj->Cy[i]+10, 0);
+                    Obj->cat_state = 1;
                 }
                 else{ //如果不是新獲得的 -> 顯示get
                     printf("%d cat is old\n", i);

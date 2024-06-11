@@ -24,6 +24,8 @@
 //訂單相關
 #include "../element/OrderControl.h"
 
+#include "../element/Exit.h"
+
 #include <allegro5/allegro_audio.h>
 #include <allegro5/allegro_acodec.h>
 #include <allegro5/allegro_font.h>
@@ -40,8 +42,8 @@ typedef enum EleType
     Basket_L,
     Meat_L,
     CatT_L,    
-    Capture_L,
     Cat_L,
+    Capture_L,
 
     //遊戲畫面內的功能頁面相關
     //圖鑑相關
@@ -52,7 +54,10 @@ typedef enum EleType
     Shop_L,
     Buy_L,
     //訂單相關
-    OrderControl_L
+    OrderControl_L,
+
+    //結束彩蛋
+    Exit_L
 
 } EleType;
 

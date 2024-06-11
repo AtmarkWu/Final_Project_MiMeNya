@@ -96,12 +96,14 @@ void OrderControl_update(Elements *self) {
                     gameFunction = -1; //回到遊戲內畫面
                     TotalMoney += 100;
                     CatNumber[1] -= 1;
+                    TotalOwnCat--;
                 }
                 else if(CatNumber[2]>=1 && client_set == 2){ // 第二單
                     client_set ++;
                     gameFunction = -1; //回到遊戲內畫面
                     TotalMoney += 150;
                     CatNumber[2] -= 1;
+                    TotalOwnCat--;
                 }
             }
             Obj->click = 0;

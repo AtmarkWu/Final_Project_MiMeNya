@@ -136,6 +136,8 @@ Scene *New_GameScene(int label)
     //訂單
     _Register_elements(pObj, New_OrderControl(OrderControl_L));
 
+    _Register_elements(pObj, New_Exit(Exit_L));
+
     // setting derived object function
     pObj->Update = game_scene_update;
     pObj->Draw = game_scene_draw;
@@ -191,45 +193,50 @@ void game_scene_update(Scene *self)
                 printf("In to Book\n");
                 Obj->click = 1;
             }
-            if(Obj->over_button[1]){ //進入商店[1]
+            else if(Obj->over_button[1]){ //進入商店[1]
                 al_play_sample_instance(Obj->Click_sample_instance);
                 printf("In to Shop\n");
                 Obj->click = 1;
             }
-            if(Obj->over_button[2]){ //進入訂單管理頁面[2]
+            else if(Obj->over_button[2]){ //進入訂單管理頁面[2]
                 al_play_sample_instance(Obj->Click_sample_instance);
                 printf("In to Order\n");
                 //不切換頁面，而是利用全域變數操控跳出來的畫面，同時截斷底下頁面的感應功能
                 Obj->click = 1;
             }
-            if(Obj->over_button[3]){ //關閉遊戲(4)
+            else if(Obj->over_button[3]){ //關閉遊戲(4)
                 //如果滑鼠按下的時候在按鈕上 -> 準備要離開
                 printf("Quit\n");
-                self->scene_end = true;
-                window = 4;
+                Obj->click = 1;
             }
         }
         else{
             if(Obj->over_button[0] && Obj->click){ //進入圖鑑[0]
                 gameFunction = 0;
             }
-            if(Obj->over_button[1] && Obj->click){ //進入商店[1]
+            else if(Obj->over_button[1] && Obj->click){ //進入商店[1]
                 al_stop_sample_instance(Obj->sample_instance); //如果進入商店，就停止遊戲主畫面內的bgm
                 gameFunction = 1;
             }
-            if(Obj->over_button[2] && Obj->click){ //進入訂單管理頁面[2]
+            else if(Obj->over_button[2] && Obj->click){ //進入訂單管理頁面[2]
                 //不切換頁面，而是利用全域變數操控跳出來的畫面，同時截斷底下頁面的感應功能
                 // gameFunction = 2;
                 if(client_set != 3){
                     gameFunction = 2;
                 }
             }
-            // if(Obj->over_button[3] && Obj->click){ //關閉遊戲(4)
-            //     //如果滑鼠按下的時候在按鈕上 -> 準備要離開
-            //     printf("Quit\n");
-            //     self->scene_end = true;
-            //     window = 4;
-            // }
+            else if(Obj->over_button[3] && Obj->click){ //關閉遊戲(4)
+                //如果滑鼠按下的時候在按鈕上 -> 準備要離開
+                printf("Quit\n");
+                if(TotalOwnCat == 0){
+                    self->scene_end = true;
+                    window = 4;                    
+                }
+                else{ //如果總持有數>0，就進入結尾彩蛋
+                    al_stop_sample_instance(Obj->sample_instance);
+                    gameFunction = 3;
+                }
+            }
             Obj->click = 0;
         }
     }
