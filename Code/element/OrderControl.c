@@ -87,6 +87,9 @@ void OrderControl_update(Elements *self) {
                     printf("accept client2\n");
                     Obj->click = 1;
                 }
+                else{
+                    al_play_sample_instance(Obj->Click_sample_instance);
+                }
             }
         }
         else{
